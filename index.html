@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Funko Pop! · D&D &amp; Critical Role — Coleção Completa</title>
 <style>
-@import url('data:text/css,');
 :root{
   --bg:#0e0a07;
   --surface:#1a1108;
@@ -691,12 +690,9 @@ const IMGS = {
   "hat-holga": "./imgs/hat-holga.png",
   "hat-simon": "./imgs/hat-simon.png",
   "hat-sofina": "./imgs/hat-sofina.png",
-  "hat-xenk": "./imgs/hat-xenk.png"
+  "hat-xenk": "./imgs/hat-xenk.png",
+  "dnd-drizzt-bw": "./imgs/588-dnd-drizzt.png"
 };
-// Nota: sem imagens externas para funcionar offline.
-// Adicionar paths locais aqui se as imagens estiverem em pasta local.
-// Exemplo: IMGS["01-dragonborn-fighter"] = "./imgs/01-dragonborn-fighter.png";
-
 const pops = [
   // ============================================================
   // DUNGEONS & DRAGONS — Linha oficial
@@ -851,7 +847,10 @@ let activeSeries = "All";
 let viewMode     = "grid";
 
 const storageKey = "dnd_cr_owned";
-const owned = new Set(JSON.parse(localStorage.getItem(storageKey) || "[]"));
+// localStorage com fallback para ambientes que o bloqueiam (file://, alguns GitHub Pages)
+let _owned_data = [];
+try { _owned_data = JSON.parse(localStorage.getItem(storageKey) || "[]"); } catch(e) { _owned_data = []; }
+const owned = new Set(_owned_data);
 const allItems = [...pops];
 
 // =============================================================
@@ -892,9 +891,12 @@ function makeCard(data, delay) {
 
   // Imagem
   const imgArea = document.createElement("div"); imgArea.className = "card-img";
-  const img = document.createElement("img"); img.alt = data.name;
+  const img = document.createElement("img"); img.alt = data.name; img.loading = "eager"; img.decoding = "async";
   img.src = (data.imgk && IMGS[data.imgk]) ? IMGS[data.imgk] : buildPlaceholderSVG(data.name, data.col || wc);
-  img.onerror = () => { img.src = buildPlaceholderSVG(data.name, data.col || wc); };
+  img.onerror = () => {
+    img.onerror = null; // prevenir loop infinito
+    img.src = buildPlaceholderSVG(data.name, data.col || wc);
+  };
   imgArea.appendChild(img);
 
   // Badge de wave
@@ -912,7 +914,7 @@ function makeCard(data, delay) {
     e.stopPropagation();
     if (owned.has(key)) { owned.delete(key); ownBtn.classList.remove("owned"); card.classList.remove("owned"); }
     else { owned.add(key); ownBtn.classList.add("owned"); card.classList.add("owned"); }
-    localStorage.setItem(storageKey, JSON.stringify([...owned]));
+    try { localStorage.setItem(storageKey, JSON.stringify([...owned])); } catch(e) {}
     updateStats();
   });
   imgArea.appendChild(ownBtn);
