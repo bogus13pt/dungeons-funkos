@@ -472,29 +472,113 @@ input[type="text"]::placeholder{color:var(--muted);font-style:italic}
 ::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:99px}
 @media(max-width:480px){:root{--card-w:140px}h1{font-size:2.5rem}}
 /* Separador de secção com ícone */
-.group-header{
+/* ============================================================
+   SEPARADORES DE SUBCATEGORIA
+   ============================================================ */
+.wave-sep{
   max-width:1240px;
-  margin:30px auto 10px;
+  margin:44px auto 0;
   padding:0 20px;
+  position:relative
+}
+.wave-sep-inner{
   display:flex;
   align-items:center;
-  gap:16px
+  gap:0;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--sep-border, rgba(180,130,50,.25));
+  background:var(--sep-bg, rgba(14,10,7,.7));
+  backdrop-filter:blur(6px);
+  box-shadow:0 4px 32px var(--sep-glow, rgba(180,130,50,.08))
 }
-.group-header-label{
+/* Banda de cor lateral esquerda */
+.wave-sep-accent{
+  width:5px;
+  align-self:stretch;
+  background:var(--sep-color, var(--gold));
+  flex-shrink:0
+}
+/* Ícone SVG decorativo */
+.wave-sep-icon{
+  width:52px;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  flex-shrink:0;
+  opacity:.85
+}
+/* Corpo do separador */
+.wave-sep-body{
+  flex:1;
+  padding:12px 16px 12px 4px;
+  min-width:0
+}
+.wave-sep-title{
+  font-family:'Georgia',serif;
+  font-size:18px;
+  font-weight:700;
+  color:var(--sep-color, var(--gold));
+  line-height:1.1;
+  letter-spacing:.5px
+}
+.wave-sep-sub{
   font-family:'Arial',sans-serif;
   font-size:10px;
   font-weight:700;
-  letter-spacing:5px;
+  letter-spacing:3px;
   text-transform:uppercase;
   color:var(--muted2);
-  white-space:nowrap;
-  padding:4px 14px;
-  border-radius:999px;
-  border:1px solid
+  margin-top:2px
 }
-.group-header-dnd{color:#c0392b;border-color:rgba(139,26,26,.5);background:rgba(139,26,26,.08)}
-.group-header-cr{color:#9b59b6;border-color:rgba(107,53,168,.5);background:rgba(107,53,168,.08)}
-.group-header::before,.group-header::after{content:'';flex:1;height:1px;background:var(--border)}
+/* Badge contagem */
+.wave-sep-count{
+  font-family:'Georgia',serif;
+  font-size:22px;
+  font-weight:700;
+  color:var(--sep-color, var(--gold));
+  padding:0 20px;
+  text-align:center;
+  flex-shrink:0;
+  border-left:1px solid var(--sep-border, rgba(180,130,50,.2))
+}
+.wave-sep-count span{
+  display:block;
+  font-family:'Arial',sans-serif;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:1px
+}
+/* Linha decorativa D20 no fundo */
+.wave-sep-inner::after{
+  content:'';
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  width:40px;
+  height:40px;
+  opacity:.06;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='20,2 38,12 38,28 20,38 2,28 2,12' fill='none' stroke='white' stroke-width='2'/%3E%3Cpolygon points='20,2 38,12 20,18 2,12' fill='none' stroke='white' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat
+}
+/* Cores por subcategoria */
+.sep-dnd-wave1 { --sep-color:#c0392b; --sep-border:rgba(139,26,26,.35); --sep-bg:rgba(139,26,26,.07); --sep-glow:rgba(192,57,43,.12) }
+.sep-dnd-wave2 { --sep-color:#c9922a; --sep-border:rgba(201,146,42,.35); --sep-bg:rgba(201,146,42,.07); --sep-glow:rgba(201,146,42,.12) }
+.sep-dnd-2022  { --sep-color:#9b59b6; --sep-border:rgba(107,53,168,.35); --sep-bg:rgba(107,53,168,.07); --sep-glow:rgba(107,53,168,.12) }
+.sep-bg3       { --sep-color:#27ae60; --sep-border:rgba(39,174,96,.35);  --sep-bg:rgba(39,174,96,.07);  --sep-glow:rgba(39,174,96,.12)  }
+.sep-hat       { --sep-color:#e74c3c; --sep-border:rgba(231,76,60,.35);  --sep-bg:rgba(231,76,60,.07);  --sep-glow:rgba(231,76,60,.12)  }
+.sep-vm        { --sep-color:#e67e22; --sep-border:rgba(230,126,34,.35); --sep-bg:rgba(230,126,34,.07); --sep-glow:rgba(230,126,34,.12) }
+.sep-mn        { --sep-color:#8e44ad; --sep-border:rgba(142,68,173,.35); --sep-bg:rgba(142,68,173,.07); --sep-glow:rgba(142,68,173,.12) }
+.sep-bh        { --sep-color:#c0392b; --sep-border:rgba(192,57,43,.35);  --sep-bg:rgba(192,57,43,.07);  --sep-glow:rgba(192,57,43,.12)  }
+.sep-cr-sp     { --sep-color:#2980b9; --sep-border:rgba(41,128,185,.35); --sep-bg:rgba(41,128,185,.07); --sep-glow:rgba(41,128,185,.12) }
+/* Linha decorativa após separador */
+.wave-sep + .grid,
+.wave-sep + div { margin-top:12px }
 </style>
 </head>
 <body>
@@ -967,26 +1051,138 @@ function makeCard(data, delay) {
 // =============================================================
 // Render
 // =============================================================
+// ============================================================
+// Config dos separadores de subcategoria
+// ============================================================
+const WAVE_SEP_CONFIG = {
+  "D&D Wave 1": {
+    cls:"sep-dnd-wave1", icon:"⚔️",
+    title:"Dungeons & Dragons — Wave 1",
+    sub:"Série original · 2019 · 9 figuras"
+  },
+  "D&D Wave 2": {
+    cls:"sep-dnd-wave2", icon:"🗡️",
+    title:"Dungeons & Dragons — Wave 2",
+    sub:"Companions do Esquecimento · 2021"
+  },
+  "D&D 2022": {
+    cls:"sep-dnd-2022", icon:"🐉",
+    title:"Dungeons & Dragons — 2022",
+    sub:"Lich · Miirym · Displacer Beast · Red Dragon"
+  },
+  "BG3 2023": {
+    cls:"sep-bg3", icon:"🎮",
+    title:"Baldur's Gate 3",
+    sub:"Companions & Villains · 2023–2024"
+  },
+  "HAT 2023": {
+    cls:"sep-hat", icon:"🎬",
+    title:"Honor Among Thieves",
+    sub:"Dungeons & Dragons · Filme 2023"
+  },
+  "Vox Machina": {
+    cls:"sep-vm", icon:"🔥",
+    title:"Critical Role — Vox Machina",
+    sub:"Campaign 1 · Personagens & Exclusivos"
+  },
+  "Mighty Nein": {
+    cls:"sep-mn", icon:"🌊",
+    title:"Critical Role — Mighty Nein",
+    sub:"Campaign 2 · Personagens & Exclusivos"
+  },
+  "Bells Hells": {
+    cls:"sep-bh", icon:"🔔",
+    title:"Critical Role — Bells Hells",
+    sub:"Campaign 3 · Personagens"
+  },
+  "CR Especiais": {
+    cls:"sep-cr-sp", icon:"⭐",
+    title:"Critical Role — Especiais",
+    sub:"Exclusivos CR Store · Variantes · Cast"
+  },
+};
+
+// Ordem canónica das waves
+const WAVE_ORDER = [
+  "D&D Wave 1","D&D Wave 2","D&D 2022",
+  "BG3 2023","HAT 2023",
+  "Vox Machina","Mighty Nein","Bells Hells","CR Especiais"
+];
+
+function makeSeparator(wave, count) {
+  const cfg = WAVE_SEP_CONFIG[wave] || { cls:"sep-dnd-wave1", icon:"🎲", title:wave, sub:"" };
+  const wrapper = document.createElement("div");
+  wrapper.className = "wave-sep";
+  wrapper.innerHTML = `
+    <div class="wave-sep-inner ${cfg.cls}">
+      <div class="wave-sep-accent"></div>
+      <div class="wave-sep-icon">${cfg.icon}</div>
+      <div class="wave-sep-body">
+        <div class="wave-sep-title">${cfg.title}</div>
+        ${cfg.sub ? `<div class="wave-sep-sub">${cfg.sub}</div>` : ""}
+      </div>
+      <div class="wave-sep-count">${count}<span>figuras</span></div>
+    </div>`;
+  return wrapper;
+}
+
 function render() {
   const q = document.getElementById("search").value.toLowerCase().trim();
   const out = document.getElementById("output");
   out.innerHTML = "";
 
   const filtered = pops.filter(p => {
-    const matchSeries = activeSeries === "All" || p.series === activeSeries || (activeSeries === "Critical Role" && p.series === "CR") || (activeSeries === "D&D" && p.series === "D&D");
+    const matchSeries = activeSeries === "All"
+      || (activeSeries === "Critical Role" && p.series === "CR")
+      || (activeSeries === "D&D" && p.series === "D&D");
     const matchWave = activeWave === "All" || p.wave === activeWave;
-    const matchQ = !q || p.name.toLowerCase().includes(q) || p.num.includes(q) || p.wave.toLowerCase().includes(q) || p.series.toLowerCase().includes(q);
+    const matchQ = !q
+      || p.name.toLowerCase().includes(q)
+      || p.num.includes(q)
+      || p.wave.toLowerCase().includes(q)
+      || p.series.toLowerCase().includes(q);
     return matchSeries && matchWave && matchQ;
   });
 
-  if (filtered.length) {
+  if (!filtered.length) {
+    const g = document.createElement("div"); g.className = "grid";
+    g.innerHTML = `<div class="empty"><div class="empty-icon">&#9828;</div><p>Nenhuma figura corresponde a "${q || activeWave}"</p></div>`;
+    out.appendChild(g);
+    document.getElementById("countPill").textContent = "Sem resultados";
+    updateStats();
+    return;
+  }
+
+  // Quando filtro de wave específico activo OU pesquisa OU lista-view: sem separadores
+  const showSeps = activeWave === "All" && !q && viewMode !== "list";
+
+  if (showSeps) {
+    // Agrupar por wave na ordem canónica
+    const byWave = {};
+    filtered.forEach(p => {
+      if (!byWave[p.wave]) byWave[p.wave] = [];
+      byWave[p.wave].push(p);
+    });
+
+    let cardIdx = 0;
+    WAVE_ORDER.forEach(wave => {
+      if (!byWave[wave] || !byWave[wave].length) return;
+      const items = byWave[wave];
+
+      // Separador
+      out.appendChild(makeSeparator(wave, items.length));
+
+      // Grid desta wave
+      const g = document.createElement("div");
+      g.className = "grid";
+      items.forEach(p => g.appendChild(makeCard(p, Math.min(cardIdx++ * 0.01, 0.25))));
+      out.appendChild(g);
+    });
+  } else {
+    // Vista simples (filtro activo, pesquisa, ou lista)
     const g = document.createElement("div");
     g.className = "grid" + (viewMode === "list" ? " list-view" : "");
     filtered.forEach((p, i) => g.appendChild(makeCard(p, Math.min(i * 0.012, 0.28))));
-    out.appendChild(g);
-  } else {
-    const g = document.createElement("div"); g.className = "grid";
-    g.innerHTML = `<div class="empty"><div class="empty-icon">&#9828;</div><p>Nenhuma figura corresponde a "${q || activeWave}"</p></div>`;
     out.appendChild(g);
   }
 
