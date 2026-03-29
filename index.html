@@ -1,1610 +1,328 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Funko Pop! · D&D &amp; Dungeons &amp; Dragons — Complete Collection</title>
+<title>BoGuS_PT — Collector Tracker Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bebas+Neue&family=Barlow+Condensed:wght@600;700;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0e0a07;
-  --surface:#1a1108;
-  --surface2:#231808;
-  --border:rgba(180,130,50,0.12);
-  --border-bright:rgba(180,130,50,0.28);
-  --gold:#c9922a;
-  --gold-dim:rgba(201,146,42,0.14);
-  --red:#8b1a1a;
-  --red-bright:#c0392b;
-  --purple:#6b35a8;
-  --purple-bright:#9b59b6;
-  --parchment:#d4b896;
-  --parchment-dim:rgba(212,184,150,0.12);
-  --green:#2e7d32;
-  --green-bright:#4caf50;
-  --text:#e8d8b8;
-  --muted:#6b5530;
-  --muted2:#9a7d52;
-  --radius:12px;
-  --card-w:162px
+  --bg:#050d1c;--bg2:#08152a;
+  --yellow:#ffc820;--cyan:#38d4ff;
+  --white:#e8f6ff;--muted:#3d5a80;--muted2:#6a8aaa;
+  --border:rgba(56,212,255,0.12);--border2:rgba(56,212,255,0.26);
+  --radius:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Georgia',serif;
-  min-height:100vh;
-  padding-bottom:80px;
-  -webkit-font-smoothing:antialiased
+  background:var(--bg);color:var(--white);
+  font-family:'Nunito',sans-serif;min-height:100vh;
+  padding-bottom:80px;-webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-/* Textura de pergaminho como background */
 body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
-  pointer-events:none;
-  z-index:999;
-  opacity:.6
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 45% at 50% 0%,rgba(56,212,255,0.09) 0%,transparent 65%),
+    radial-gradient(ellipse 35% 35% at 8% 85%,rgba(255,200,32,0.05) 0%,transparent 70%),
+    radial-gradient(ellipse 35% 35% at 92% 85%,rgba(10,184,232,0.05) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
 }
-header{
-  position:relative;
-  overflow:hidden;
-  padding:64px 24px 48px;
-  text-align:center;
-  background:linear-gradient(180deg,#060402 0%,var(--bg) 100%);
-  border-bottom:1px solid var(--border-bright)
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:radial-gradient(circle,rgba(56,212,255,0.045) 1px,transparent 1px);
+  background-size:38px 38px;pointer-events:none;z-index:0;
 }
-header::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:radial-gradient(ellipse 90% 60% at 50% -20%,rgba(139,26,26,.22) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(107,53,168,.1) 0%,transparent 60%);
-  pointer-events:none
-}
-/* Grade estilo mapa de masmorra */
-.hero-grid{
-  position:absolute;
-  inset:0;
-  background-image:
-    linear-gradient(rgba(180,130,50,.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(180,130,50,.03) 1px,transparent 1px);
-  background-size:48px 48px;
-  mask-image:radial-gradient(ellipse 80% 80% at 50% 0%,black,transparent)
-}
-/* Ornamentos de canto estilo medieval */
-.hero-ghost{
-  position:absolute;
-  inset:0;
-  background-image:
-    radial-gradient(circle 100px at 10% 50%,rgba(139,26,26,.08),transparent),
-    radial-gradient(circle 80px at 90% 50%,rgba(107,53,168,.08),transparent),
-    radial-gradient(circle 200px at 50% 110%,rgba(201,146,42,.05),transparent);
-  pointer-events:none
-}
-.corner-ornament{
-  position:absolute;
-  width:60px;
-  height:60px;
-  opacity:.18
-}
-.corner-ornament svg{fill:var(--gold)}
-.corner-tl{top:12px;left:12px}
-.corner-tr{top:12px;right:12px;transform:scaleX(-1)}
-.corner-bl{bottom:12px;left:12px;transform:scaleY(-1)}
-.corner-br{bottom:12px;right:12px;transform:scale(-1,-1)}
-.eyebrow{
-  font-family:'Georgia',serif;
-  font-size:11px;
-  font-weight:400;
-  letter-spacing:6px;
-  text-transform:uppercase;
-  color:var(--gold);
-  margin-bottom:14px;
-  position:relative;
-  z-index:1;
-  font-style:italic
-}
-h1{
-  font-family:'Georgia',serif;
-  font-size:clamp(2.8rem,9vw,6rem);
-  letter-spacing:4px;
-  line-height:1;
-  position:relative;
-  z-index:1;
-  background:linear-gradient(135deg,#8b1a1a 0%,#c9922a 35%,#e8d8b8 65%,#6b35a8 100%);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  text-shadow:none
-}
-h1 .amp{
-  font-size:.8em;
-  -webkit-text-fill-color:var(--gold);
-  color:var(--gold)
-}
-.subtitle{
-  font-size:13px;
-  color:var(--muted2);
-  margin-top:12px;
-  position:relative;
-  z-index:1;
-  letter-spacing:.5px;
-  font-style:italic
-}
-.subtitle strong{color:var(--gold);font-weight:600;font-style:normal}
-.divider-rune{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  margin:20px auto 0;
-  position:relative;
-  z-index:1;
-  color:var(--muted)
-}
-.divider-rune::before,.divider-rune::after{
-  content:'';
-  flex:1;
-  max-width:120px;
-  height:1px;
-  background:linear-gradient(90deg,transparent,var(--border-bright))
-}
-.divider-rune::after{background:linear-gradient(90deg,var(--border-bright),transparent)}
-.rune-symbol{font-size:18px;color:var(--gold);opacity:.7}
-.stats{
-  display:flex;
-  justify-content:center;
-  gap:0;
-  margin:22px auto 0;
-  max-width:520px;
-  position:relative;
-  z-index:1;
-  border:1px solid var(--border-bright);
-  border-radius:10px;
-  overflow:hidden;
-  backdrop-filter:blur(8px);
-  background:rgba(14,10,7,.65)
-}
-.stat{flex:1;padding:12px 16px;text-align:center;border-right:1px solid var(--border)}
-.stat:last-child{border-right:none}
-.stat-val{
-  font-family:'Georgia',serif;
-  font-size:1.55rem;
-  letter-spacing:1px;
-  color:var(--parchment);
-  line-height:1
-}
-.stat-lbl{
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-top:4px;
-  font-family:'Arial',sans-serif
-}
-/* Faixa de série (D&D vs Critical Role) */
-.series-strip{
-  max-width:1240px;
-  margin:28px auto 0;
-  padding:0 20px;
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  flex-wrap:wrap
-}
-.series-badge{
-  padding:8px 20px;
-  border-radius:8px;
-  font-family:'Arial',sans-serif;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  border:1px solid;
-  cursor:default
-}
-.series-dnd{background:rgba(139,26,26,.15);border-color:rgba(139,26,26,.4);color:#c0392b}
-.series-cr{background:rgba(107,53,168,.15);border-color:rgba(107,53,168,.4);color:#9b59b6}
-.controls{max-width:1240px;margin:20px auto 0;padding:0 20px}
-.search-wrap{position:relative;margin-bottom:14px}
-.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
-input[type="text"]{
-  width:100%;
-  background:var(--surface);
-  border:1px solid var(--border-bright);
-  border-radius:9px;
-  color:var(--text);
-  font-family:'Georgia',serif;
-  font-size:15px;
-  padding:12px 18px 12px 44px;
-  outline:none;
-  transition:border-color .2s,box-shadow .2s
-}
-input[type="text"]:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
-input[type="text"]::placeholder{color:var(--muted);font-style:italic}
-.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;align-items:center}
-.filter-label{
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-right:4px;
-  white-space:nowrap;
-  font-family:'Arial',sans-serif
-}
-.filter-btn{
-  background:transparent;
-  border:1px solid var(--border-bright);
-  border-radius:999px;
-  color:var(--muted2);
-  cursor:pointer;
-  font-family:'Arial',sans-serif;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  padding:5px 13px;
-  transition:all .15s;
-  white-space:nowrap
-}
-.filter-btn:hover{background:rgba(255,255,255,.05);color:var(--text);border-color:rgba(180,130,50,.4)}
-.filter-btn.active{color:#000;border-color:transparent}
-.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:8px}
-.owned-pill{
-  background:rgba(46,125,50,.12);
-  border:1px solid rgba(46,125,50,.3);
-  border-radius:7px;
-  padding:6px 13px;
-  font-size:12px;
-  font-weight:700;
-  color:var(--green-bright);
-  font-family:'Arial',sans-serif;
-  letter-spacing:.5px
-}
-.count-pill{font-size:12px;color:var(--muted);font-family:'Arial',sans-serif;letter-spacing:.5px}
-.view-toggle{display:flex;gap:4px}
-.view-btn{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:7px;
-  color:var(--muted);
-  cursor:pointer;
-  width:32px;
-  height:32px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-  transition:all .15s
-}
-.view-btn.active{background:var(--gold);border-color:var(--gold);color:#000}
-.section-label{
-  max-width:1240px;
-  margin:24px auto 10px;
-  padding:0 20px;
-  display:flex;
-  align-items:center;
-  gap:14px
-}
-.section-label span{
-  font-family:'Arial',sans-serif;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  color:var(--muted);
-  white-space:nowrap
-}
-.section-label::before,.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.grid{
-  max-width:1240px;
-  margin:0 auto;
-  padding:0 20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(var(--card-w),1fr));
-  gap:11px
-}
-.grid.list-view{grid-template-columns:1fr}
-.card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  overflow:hidden;
-  position:relative;
-  transition:transform .2s,box-shadow .2s,border-color .2s;
-  animation:rise .35s ease both
-}
-@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.card:hover{transform:translateY(-4px)}
-.card.owned{outline:2px solid var(--green-bright);outline-offset:-1px;background:var(--surface2)}
-.card-img{
-  height:170px;
-  background:#080503;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  position:relative
-}
-.card-img img{width:100%;height:100%;object-fit:contain;padding:8px;transition:transform .35s}
-.card:hover .card-img img{transform:scale(1.08)}
-.placeholder{
-  width:100%;
-  height:100%;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  padding:16px;
-  display:none
-}
-.ph-num{font-family:'Georgia',serif;font-size:1.8rem;letter-spacing:1px;opacity:.9}
-.ph-name{font-size:7px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-align:center;opacity:.4;line-height:1.3;font-family:'Arial',sans-serif}
-/* Ornamento de dragão / dados no badge */
-.wave-badge{
-  position:absolute;
-  top:8px;
-  left:8px;
-  font-family:'Arial',sans-serif;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  padding:3px 9px;
-  border-radius:999px;
-  color:#fff;
-  z-index:2;
-  white-space:nowrap;
-  text-shadow:0 1px 2px rgba(0,0,0,.6)
-}
-.owned-btn{
-  position:absolute;
-  top:8px;
-  right:8px;
-  width:26px;
-  height:26px;
-  border-radius:50%;
-  border:1.5px solid rgba(255,255,255,.2);
-  background:rgba(0,0,0,.55);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-  font-weight:700;
-  color:rgba(255,255,255,.3);
-  transition:all .15s;
-  user-select:none;
-  z-index:2;
-  backdrop-filter:blur(4px)
-}
-.owned-btn:hover{border-color:var(--green-bright);color:var(--green-bright)}
-.owned-btn.owned{background:var(--green-bright);border-color:var(--green-bright);color:#000}
-.card-body{padding:10px 12px 13px}
-.card-num{
-  font-family:'Arial',sans-serif;
-  font-size:11px;
-  font-weight:600;
-  letter-spacing:2px;
-  color:var(--muted);
-  margin-bottom:3px;
-  text-transform:uppercase
-}
-.card-name{
-  font-family:'Georgia',serif;
-  font-size:14px;
-  font-weight:700;
-  color:var(--text);
-  line-height:1.25;
-  margin-bottom:6px;
-  letter-spacing:.2px
-}
-.card-series{
-  font-family:'Arial',sans-serif;
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  margin-bottom:5px;
-  opacity:.7
-}
-.card-tags{display:flex;flex-wrap:wrap;gap:3px;align-items:center}
-.size-tag{
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.5px;
-  text-transform:uppercase;
-  padding:2px 7px;
-  border-radius:4px;
-  white-space:nowrap;
-  font-family:'Arial',sans-serif
-}
-.excl-tag{font-size:10px;color:var(--muted2);font-family:'Arial',sans-serif}
-.excl-tag::before{content:'\2605 ';color:var(--gold);font-size:9px}
-.chase-tag{
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.5px;
-  text-transform:uppercase;
-  padding:2px 7px;
-  border-radius:4px;
-  background:rgba(201,146,42,.18);
-  color:#c9922a;
-  border:1px solid rgba(201,146,42,.3);
-  font-family:'Arial',sans-serif
-}
-.glow-tag{
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.5px;
-  text-transform:uppercase;
-  padding:2px 7px;
-  border-radius:4px;
-  background:rgba(107,53,168,.18);
-  color:#9b59b6;
-  border:1px solid rgba(107,53,168,.3);
-  font-family:'Arial',sans-serif
-}
-/* List view */
-.grid.list-view .card{display:flex;flex-direction:row;align-items:center}
-.grid.list-view .card-img{width:76px;height:76px;flex-shrink:0;border-radius:0}
-.grid.list-view .card-img img{padding:4px}
-.grid.list-view .card-body{flex:1;padding:8px 13px;display:flex;align-items:center;gap:14px}
-.grid.list-view .card-name{margin-bottom:0;font-size:14px}
-.grid.list-view .wave-badge{top:5px;left:5px;font-size:7px;padding:2px 5px}
-.grid.list-view .owned-btn{top:5px;right:5px}
-.grid.list-view .card-series{margin-bottom:0}
-.empty{
-  grid-column:1/-1;
-  text-align:center;
-  padding:80px 20px;
-  color:var(--muted)
-}
-.empty-icon{font-size:3rem;margin-bottom:16px;opacity:.3}
-.empty p{font-family:'Georgia',serif;font-size:17px;letter-spacing:1px;font-style:italic}
-/* Filtros de série */
-.filter-series-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;align-items:center}
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:99px}
-@media(max-width:480px){:root{--card-w:140px}h1{font-size:2.5rem}}
-/* Separador de secção com ícone */
-/* ============================================================
-   SEPARADORES DE SUBCATEGORIA
-   ============================================================ */
-.wave-sep{
-  max-width:1240px;
-  margin:44px auto 0;
-  padding:0 20px;
-  position:relative
-}
-.wave-sep-inner{
-  display:flex;
-  align-items:center;
-  gap:0;
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid var(--sep-border, rgba(180,130,50,.25));
-  background:var(--sep-bg, rgba(14,10,7,.7));
-  backdrop-filter:blur(6px);
-  box-shadow:0 4px 32px var(--sep-glow, rgba(180,130,50,.08))
-}
-/* Banda de cor lateral esquerda */
-.wave-sep-accent{
-  width:5px;
-  align-self:stretch;
-  background:var(--sep-color, var(--gold));
-  flex-shrink:0
-}
-/* Ícone SVG decorativo */
-.wave-sep-icon{
-  width:52px;
-  height:52px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:26px;
-  flex-shrink:0;
-  opacity:.85
-}
-/* Corpo do separador */
-.wave-sep-body{
-  flex:1;
-  padding:12px 16px 12px 4px;
-  min-width:0
-}
-.wave-sep-title{
-  font-family:'Georgia',serif;
-  font-size:18px;
-  font-weight:700;
-  color:var(--sep-color, var(--gold));
-  line-height:1.1;
-  letter-spacing:.5px
-}
-.wave-sep-sub{
-  font-family:'Arial',sans-serif;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--muted2);
-  margin-top:2px
-}
-/* Badge contagem */
-.wave-sep-count{
-  font-family:'Georgia',serif;
-  font-size:22px;
-  font-weight:700;
-  color:var(--sep-color, var(--gold));
-  padding:0 20px;
-  text-align:center;
-  flex-shrink:0;
-  border-left:1px solid var(--sep-border, rgba(180,130,50,.2))
-}
-.wave-sep-count span{
-  display:block;
-  font-family:'Arial',sans-serif;
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-top:1px
-}
-/* Linha decorativa D20 no fundo */
-.wave-sep-inner::after{
-  content:'';
-  position:absolute;
-  right:16px;
-  top:50%;
-  transform:translateY(-50%);
-  width:40px;
-  height:40px;
-  opacity:.06;
-  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='20,2 38,12 38,28 20,38 2,28 2,12' fill='none' stroke='white' stroke-width='2'/%3E%3Cpolygon points='20,2 38,12 20,18 2,12' fill='none' stroke='white' stroke-width='1'/%3E%3C/svg%3E") center/contain no-repeat
-}
-/* Cores por subcategoria */
-.sep-dnd-wave1 { --sep-color:#c0392b; --sep-border:rgba(139,26,26,.35); --sep-bg:rgba(139,26,26,.07); --sep-glow:rgba(192,57,43,.12) }
-.sep-dnd-wave2 { --sep-color:#c9922a; --sep-border:rgba(201,146,42,.35); --sep-bg:rgba(201,146,42,.07); --sep-glow:rgba(201,146,42,.12) }
-.sep-dnd-2022  { --sep-color:#9b59b6; --sep-border:rgba(107,53,168,.35); --sep-bg:rgba(107,53,168,.07); --sep-glow:rgba(107,53,168,.12) }
-.sep-bg3       { --sep-color:#27ae60; --sep-border:rgba(39,174,96,.35);  --sep-bg:rgba(39,174,96,.07);  --sep-glow:rgba(39,174,96,.12)  }
-.sep-hat       { --sep-color:#e74c3c; --sep-border:rgba(231,76,60,.35);  --sep-bg:rgba(231,76,60,.07);  --sep-glow:rgba(231,76,60,.12)  }
-.sep-vm        { --sep-color:#e67e22; --sep-border:rgba(230,126,34,.35); --sep-bg:rgba(230,126,34,.07); --sep-glow:rgba(230,126,34,.12) }
-.sep-mn        { --sep-color:#8e44ad; --sep-border:rgba(142,68,173,.35); --sep-bg:rgba(142,68,173,.07); --sep-glow:rgba(142,68,173,.12) }
-.sep-bh        { --sep-color:#c0392b; --sep-border:rgba(192,57,43,.35);  --sep-bg:rgba(192,57,43,.07);  --sep-glow:rgba(192,57,43,.12)  }
-.sep-cr-sp     { --sep-color:#2980b9; --sep-border:rgba(41,128,185,.35); --sep-bg:rgba(41,128,185,.07); --sep-glow:rgba(41,128,185,.12) }
-/* Linha decorativa após separador */
-.wave-sep + .grid,
-.wave-sep + div { margin-top:12px }
 
-/* ============================================================
-   EXPORT / IMPORT
-   ============================================================ */
-.sync-btn{
-  background:rgba(4,14,28,.75);
-  border:1px solid var(--border-bright);
-  border-radius:7px;
-  color:var(--muted2);
-  cursor:pointer;
-  font-family:'Arial',sans-serif;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:.8px;
-  text-transform:uppercase;
-  padding:6px 12px;
-  display:flex;
-  align-items:center;
-  gap:6px;
-  transition:all .15s;
-  white-space:nowrap;
-  height:34px
-}
-.sync-btn:hover{
-  background:var(--gold-dim);
-  border-color:var(--gold);
-  color:var(--gold)
-}
-.sync-btn svg{width:13px;height:13px;flex-shrink:0;fill:currentColor}
-/* Modal overlay */
-.sync-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.72);
-  backdrop-filter:blur(6px);
-  z-index:1000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .2s
-}
-.sync-modal.open{opacity:1;pointer-events:all}
-.sync-box{
-  background:linear-gradient(155deg,#1a1108,#231808);
-  border:1px solid var(--border-bright);
-  border-radius:16px;
-  padding:28px 28px 24px;
-  max-width:480px;
-  width:100%;
-  box-shadow:0 24px 80px rgba(0,0,0,.7),0 0 0 1px rgba(180,130,50,.1);
-  transform:translateY(10px);
-  transition:transform .2s
-}
-.sync-modal.open .sync-box{transform:translateY(0)}
-.sync-box-title{
-  font-family:'Georgia',serif;
-  font-size:20px;
-  color:var(--gold);
-  margin-bottom:4px;
-  display:flex;
-  align-items:center;
-  gap:10px
-}
-.sync-box-sub{
-  font-family:'Arial',sans-serif;
-  font-size:11px;
-  color:var(--muted2);
-  letter-spacing:.5px;
-  margin-bottom:20px
-}
-.sync-tabs{
-  display:flex;
-  gap:4px;
-  margin-bottom:18px;
-  border-bottom:1px solid var(--border)
-}
-.sync-tab{
-  background:transparent;
-  border:none;
-  border-bottom:2px solid transparent;
-  color:var(--muted2);
-  cursor:pointer;
-  font-family:'Arial',sans-serif;
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  padding:8px 14px;
-  margin-bottom:-1px;
-  transition:all .15s
-}
-.sync-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
-.sync-panel{display:none}
-.sync-panel.active{display:block}
-/* Export */
-.sync-info-row{
-  display:flex;
-  gap:10px;
-  margin-bottom:14px;
-  flex-wrap:wrap
-}
-.sync-stat{
-  background:rgba(201,146,42,.08);
-  border:1px solid rgba(201,146,42,.2);
-  border-radius:8px;
-  padding:10px 16px;
-  text-align:center;
-  flex:1;
-  min-width:80px
-}
-.sync-stat-val{
-  font-family:'Georgia',serif;
-  font-size:22px;
-  color:var(--gold);
-  line-height:1
-}
-.sync-stat-lbl{
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-top:3px
-}
-.sync-btn-primary{
-  width:100%;
-  padding:12px;
-  background:var(--gold);
-  border:none;
-  border-radius:9px;
-  color:#000;
-  cursor:pointer;
-  font-family:'Arial',sans-serif;
-  font-size:13px;
-  font-weight:800;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  transition:all .15s;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px
-}
-.sync-btn-primary:hover{background:#e0a830;box-shadow:0 4px 20px rgba(201,146,42,.4)}
-.sync-btn-primary svg{width:16px;height:16px;fill:currentColor}
-/* Import */
-.sync-drop{
-  border:2px dashed var(--border-bright);
-  border-radius:12px;
-  padding:28px 20px;
-  text-align:center;
-  cursor:pointer;
-  transition:all .2s;
-  margin-bottom:14px
-}
-.sync-drop:hover,.sync-drop.drag{
-  border-color:var(--gold);
-  background:var(--gold-dim)
-}
-.sync-drop-icon{font-size:32px;margin-bottom:8px;opacity:.7}
-.sync-drop-text{
-  font-family:'Arial',sans-serif;
-  font-size:12px;
-  color:var(--muted2);
-  line-height:1.5
-}
-.sync-drop-text strong{color:var(--gold)}
-#syncFileInput{display:none}
-.sync-msg{
-  padding:10px 14px;
-  border-radius:8px;
-  font-family:'Arial',sans-serif;
-  font-size:12px;
-  font-weight:700;
-  margin-top:10px;
-  display:none
-}
-.sync-msg.ok{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);color:var(--green-bright)}
-.sync-msg.err{background:rgba(192,57,43,.12);border:1px solid rgba(192,57,43,.3);color:#e74c3c}
-/* Close btn */
-.sync-close{
-  float:right;
-  background:transparent;
-  border:1px solid var(--border-bright);
-  border-radius:6px;
-  color:var(--muted2);
-  cursor:pointer;
-  font-size:16px;
-  width:30px;height:30px;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .15s;
-  margin-left:auto
-}
-.sync-close:hover{color:var(--text);border-color:var(--muted2)}
-/* Merge options */
-.sync-merge-opts{
-  display:flex;
-  gap:8px;
-  margin-bottom:14px
-}
-.sync-radio{
-  flex:1;
-  cursor:pointer;
-  border:1px solid var(--border-bright);
-  border-radius:8px;
-  padding:10px 12px;
-  transition:all .15s
-}
-.sync-radio input{display:none}
-.sync-radio.selected{border-color:var(--gold);background:var(--gold-dim)}
-.sync-radio-title{
-  font-family:'Arial',sans-serif;
-  font-size:11px;
-  font-weight:700;
-  color:var(--text);
-  letter-spacing:.5px
-}
-.sync-radio-desc{
-  font-family:'Arial',sans-serif;
-  font-size:10px;
-  color:var(--muted2);
-  margin-top:2px
-}
-@media(max-width:480px){
-  .sync-box{padding:20px 16px 18px}
-  .sync-box-title{font-size:17px}
+/* HEADER */
+header{position:relative;z-index:1;text-align:center;padding:64px 24px 52px;border-bottom:2px solid rgba(56,212,255,0.14);overflow:hidden;}
+.rings{position:absolute;left:50%;top:30px;transform:translateX(-50%);width:320px;height:320px;pointer-events:none;z-index:0;}
+.ring{position:absolute;inset:0;border-radius:50%;animation:spin 20s linear infinite;}
+.ring:nth-child(1){border:2px solid rgba(56,212,255,0.15);animation-duration:22s}
+.ring:nth-child(2){inset:26px;border:1.5px solid rgba(255,200,32,0.11);animation-direction:reverse;animation-duration:15s}
+.ring:nth-child(3){inset:52px;border:1px solid rgba(56,212,255,0.08);animation-duration:35s}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.logo-wrap{position:relative;z-index:1;display:inline-block;margin-bottom:18px;}
+.logo-img{width:150px;height:150px;border-radius:50%;border:3px solid rgba(56,212,255,0.35);box-shadow:0 0 40px rgba(56,212,255,0.22),0 0 80px rgba(255,200,32,0.09);object-fit:cover;display:block;transition:transform .4s,box-shadow .4s;}
+.logo-img:hover{transform:scale(1.07) rotate(2deg);box-shadow:0 0 60px rgba(56,212,255,0.38),0 0 100px rgba(255,200,32,0.14);}
+
+.eyebrow{font-size:10px;font-weight:900;letter-spacing:8px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;text-shadow:0 0 18px rgba(56,212,255,0.5);position:relative;z-index:1;}
+h1{font-family:'Bangers',cursive;font-size:clamp(3.2rem,11vw,6.5rem);letter-spacing:10px;line-height:.9;position:relative;z-index:1;background:linear-gradient(160deg,#fff 0%,var(--cyan) 28%,var(--yellow) 62%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% auto;animation:shimmer 5s linear infinite;filter:drop-shadow(4px 5px 0 rgba(0,20,60,0.8));}
+@keyframes shimmer{to{background-position:200% center}}
+.subtitle{font-size:12px;font-weight:700;color:var(--muted2);margin-top:10px;position:relative;z-index:1;letter-spacing:.8px;}
+.subtitle strong{color:var(--yellow);}
+.badge-row{display:flex;justify-content:center;gap:10px;margin-top:20px;flex-wrap:wrap;position:relative;z-index:1;}
+.badge{background:rgba(10,22,45,0.8);border:1.5px solid var(--border2);border-radius:999px;padding:6px 18px;font-size:11px;font-weight:900;letter-spacing:.8px;text-transform:uppercase;}
+.badge.cyan{color:var(--cyan);border-color:rgba(56,212,255,0.32);}
+.badge.yellow{color:var(--yellow);border-color:rgba(255,200,32,0.32);}
+
+/* SECTION */
+.section-title{position:relative;z-index:1;max-width:1200px;margin:52px auto 22px;padding:0 24px;display:flex;align-items:center;gap:16px;}
+.section-title span{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:900;letter-spacing:5px;color:var(--cyan);text-shadow:0 0 16px rgba(56,212,255,0.4);white-space:nowrap;}
+.section-title::before,.section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);}
+
+/* GRID */
+.grid{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px;}
+
+/* CARD */
+.card{background:linear-gradient(155deg,rgba(10,22,45,0.96) 0%,rgba(14,28,58,0.96) 100%);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;position:relative;transition:transform .22s,box-shadow .22s,border-color .22s;animation:rise .38s ease both;}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.card:nth-child(1){animation-delay:.04s}.card:nth-child(2){animation-delay:.09s}.card:nth-child(3){animation-delay:.14s}.card:nth-child(4){animation-delay:.19s}.card:nth-child(5){animation-delay:.24s}.card:nth-child(6){animation-delay:.29s}.card:nth-child(7){animation-delay:.34s}.card:nth-child(8){animation-delay:.39s}.card:nth-child(9){animation-delay:.44s}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--cyan));opacity:.6;transition:opacity .2s;z-index:3;}
+.card:hover{transform:translateY(-6px) scale(1.01);}
+.card:hover::before{opacity:1;}
+
+/* BANNER */
+.card-banner{height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative;flex-shrink:0;padding:14px 18px 10px;text-align:center;}
+.card-banner-bg{position:absolute;inset:0;transition:opacity .3s;}
+.card:hover .card-banner-bg{filter:brightness(1.15);}
+.banner-eyebrow{display:none;}
+.banner-title-wrap{position:relative;z-index:1;text-align:center;}
+.banner-sub{display:none;}
+.card-type-badge{position:absolute;bottom:7px;right:9px;font-family:'Barlow Condensed',sans-serif;font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);z-index:2;}
+
+/* BODY */
+.card-body{padding:13px 16px 16px;flex:1;display:flex;flex-direction:column;}
+.card-franchise{font-size:8.5px;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted2);margin-bottom:5px;}
+.card-desc{font-size:11px;font-weight:700;color:var(--muted2);line-height:1.6;flex:1;margin-bottom:12px;}
+.card-cta{display:flex;align-items:center;justify-content:space-between;background:rgba(56,212,255,0.06);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);transition:background .2s,color .2s;}
+.card:hover .card-cta{background:rgba(56,212,255,0.13);color:#fff;}
+.card-arrow{font-size:13px;transition:transform .2s;}
+.card:hover .card-arrow{transform:translateX(4px);}
+
+/* FOOTER */
+footer{position:relative;z-index:1;margin-top:70px;padding:26px 24px;border-top:1px solid var(--border);text-align:center;}
+footer p{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);line-height:2;max-width:700px;margin:0 auto;}
+footer strong{color:var(--cyan);}
+
+@media(max-width:600px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
+  h1{font-size:3rem;letter-spacing:6px;}
+  .logo-img{width:115px;height:115px;}
 }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="hero-grid"></div>
-  <div class="hero-ghost"></div>
-
-  <!-- Ornamentos de canto medievais SVG -->
-  <div class="corner-ornament corner-tl">
-    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 2 L58 2 L2 58 Z M10 10 L30 2 L2 30 Z" opacity=".5"/>
-      <path d="M2 2 L18 2 L2 18 Z" opacity=".9"/>
-      <circle cx="8" cy="8" r="3"/>
-    </svg>
+  <div class="rings"><div class="ring"></div><div class="ring"></div><div class="ring"></div></div>
+  <div class="logo-wrap">
+    <img class="logo-img" src="logo.png" alt="BoGuS_PT">
   </div>
-  <div class="corner-ornament corner-tr">
-    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 2 L58 2 L2 58 Z M10 10 L30 2 L2 30 Z" opacity=".5"/>
-      <path d="M2 2 L18 2 L2 18 Z" opacity=".9"/>
-      <circle cx="8" cy="8" r="3"/>
-    </svg>
-  </div>
-  <div class="corner-ornament corner-bl">
-    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 2 L58 2 L2 58 Z M10 10 L30 2 L2 30 Z" opacity=".5"/>
-      <path d="M2 2 L18 2 L2 18 Z" opacity=".9"/>
-      <circle cx="8" cy="8" r="3"/>
-    </svg>
-  </div>
-  <div class="corner-ornament corner-br">
-    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 2 L58 2 L2 58 Z M10 10 L30 2 L2 30 Z" opacity=".5"/>
-      <path d="M2 2 L18 2 L2 18 Z" opacity=".9"/>
-      <circle cx="8" cy="8" r="3"/>
-    </svg>
-  </div>
-
-  <div class="eyebrow">Funko Pop! · Tabletop &amp; RPG</div>
-  <h1>DUNGEONS &amp; DRAGONS</h1>
-  <p class="subtitle">Complete collection — <strong id="totalCount">…</strong> figures &amp; variants</p>
-
-  <div class="divider-rune">
-    <span class="rune-symbol">⚔</span>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><div class="stat-val" id="statOwned">0</div><div class="stat-lbl">Owned</div></div>
-    <div class="stat"><div class="stat-val" id="statTotal">0</div><div class="stat-lbl">Total</div></div>
-    <div class="stat"><div class="stat-val" id="statPct">0%</div><div class="stat-lbl">Complete</div></div>
-    <div class="stat"><div class="stat-val" id="statDnd">0</div><div class="stat-lbl">D&amp;D</div></div>
-    <div class="stat"><div class="stat-val" id="statCr">0</div><div class="stat-lbl">Crit. Role</div></div>
+  <div class="eyebrow">Collector Tracker · All Collections</div>
+  <p class="subtitle">Every collection. Every figure. Every check. — <strong>9 trackers</strong> and counting.</p>
+  <div class="badge-row">
+    <div class="badge cyan">✓ Track your collection</div>
+    <div class="badge yellow">★ Fan-made · No affiliation</div>
   </div>
 </header>
 
-<!-- Faixas de série informativas -->
-<div class="series-strip">
-  <div class="series-badge series-dnd">&#9812; Dungeons &amp; Dragons — Linha oficial D&amp;D</div>
-  <div class="series-badge series-cr">&#9670; Vox Machina — Campaign 1</div>
-</div>
+<div class="section-title"><span>FUNKO POP! TRACKERS</span></div>
+<div class="grid" id="funkos"></div>
 
-<div class="controls">
-  <div class="search-wrap">
-    <span class="search-icon">&#9906;</span>
-    <input type="text" id="search" placeholder="Search by name, number, series…" autocomplete="off" spellcheck="false">
-  </div>
+<div class="section-title"><span>TOYS-TO-LIFE &amp; PHYSICAL FIGURES</span></div>
+<div class="grid" id="toys"></div>
 
-  <div class="filter-series-row">
-    <span class="filter-label">Series</span>
-    <div id="seriesFilters"></div>
-  </div>
+<div class="section-title"><span>PHYSICAL GAMES</span></div>
+<div class="grid" id="games-grid"></div>
 
-  <div class="filter-row">
-    <span class="filter-label">Wave</span>
-    <div id="filters"></div>
-  </div>
+<div class="section-title"><span>HARDWARE &amp; CONSOLES</span></div>
+<div class="grid" id="consoles-grid"></div>
 
-  <div class="toolbar">
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <div class="owned-pill" id="ownedCount">&#10003; 0 owned</div>
-      <div class="count-pill" id="countPill">A mostrar 0 items</div>
-    </div>
-    <div style="display:flex;gap:6px;align-items:center">
-      <!-- Export -->
-      <button class="sync-btn" onclick="openSync('export')" title="Export coleção">
-        <svg viewBox="0 0 16 16"><path d="M8 1v9M4 7l4 4 4-4M2 13h12"/><rect x="2" y="11" width="12" height="3" rx="1" style="fill:none;stroke:currentColor;stroke-width:1.5"/></svg>
-        Export
-      </button>
-      <!-- Import -->
-      <button class="sync-btn" onclick="openSync('import')" title="Import coleção">
-        <svg viewBox="0 0 16 16"><path d="M8 11V2M4 5l4-4 4 4M2 13h12"/><rect x="2" y="11" width="12" height="3" rx="1" style="fill:none;stroke:currentColor;stroke-width:1.5"/></svg>
-        Import
-      </button>
-      <div class="view-toggle">
-        <button class="view-btn active" id="gridViewBtn" title="Vista em grelha" onclick="setView('grid')">&#8862;</button>
-        <button class="view-btn" id="listViewBtn" title="Vista em lista" onclick="setView('list')">&#9776;</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="output"></div>
-
-<!-- ============================================================
-     MODAL SYNC
-     ============================================================ -->
-<div class="sync-modal" id="syncModal" onclick="closeSyncIfOutside(event)">
-  <div class="sync-box">
-
-    <!-- Header -->
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">
-      <div class="sync-box-title">
-        <span>&#9670;</span> Sincronizar Wave
-      </div>
-      <button class="sync-close" onclick="closeSync()">&#x2715;</button>
-    </div>
-    <div class="sync-box-sub">Export or import your collection as JSON to sync between devices</div>
-
-    <!-- Tabs -->
-    <div class="sync-tabs">
-      <button class="sync-tab active" id="tabExport" onclick="switchTab('export')">&#8593; Export</button>
-      <button class="sync-tab" id="tabImport" onclick="switchTab('import')">&#8595; Import</button>
-    </div>
-
-    <!-- EXPORT PANEL -->
-    <div class="sync-panel active" id="panelExport">
-      <div class="sync-info-row" id="exportStats"></div>
-      <button class="sync-btn-primary" onclick="doExport()">
-        <svg viewBox="0 0 16 16"><path d="M2 10v4h12v-4M8 2v8M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-        Descarregar ficheiro .json
-      </button>
-      <div style="margin-top:12px;padding:10px 14px;background:rgba(201,146,42,.06);border:1px solid rgba(201,146,42,.15);border-radius:8px">
-        <p style="font-family:Arial,sans-serif;font-size:11px;color:var(--muted2);line-height:1.6">
-          💡 Guarda o ficheiro <strong style="color:var(--gold)">colecao-dnd-cr.json</strong> e importa-o noutro dispositivo para sincronizar o teu progresso.
-        </p>
-      </div>
-    </div>
-
-    <!-- IMPORT PANEL -->
-    <div class="sync-panel" id="panelImport">
-      <!-- Merge options -->
-      <div class="sync-merge-opts">
-        <label class="sync-radio selected" id="radioMerge" onclick="selectMerge('merge')">
-          <input type="radio" name="mergeMode" value="merge" checked>
-          <div class="sync-radio-title">&#43; Juntar</div>
-          <div class="sync-radio-desc">Merge with existing</div>
-        </label>
-        <label class="sync-radio" id="radioReplace" onclick="selectMerge('replace')">
-          <input type="radio" name="mergeMode" value="replace">
-          <div class="sync-radio-title">&#8635; Substituir</div>
-          <div class="sync-radio-desc">Replace all with import</div>
-        </label>
-      </div>
-      <!-- Drop zone -->
-      <div class="sync-drop" id="syncDrop"
-           onclick="document.getElementById('syncFileInput').click()"
-           ondragover="dragOver(event)"
-           ondragleave="dragLeave(event)"
-           ondrop="dropFile(event)">
-        <div class="sync-drop-icon">&#128193;</div>
-        <div class="sync-drop-text">
-          <strong>Clica ou arrasta</strong> o ficheiro .json aqui<br>
-          <span style="font-size:10px;opacity:.7">colecao-dnd-cr.json</span>
-        </div>
-      </div>
-      <input type="file" id="syncFileInput" accept=".json,application/json" onchange="loadFile(this)">
-      <div class="sync-msg" id="syncMsg"></div>
-    </div>
-
-  </div>
-</div>
+<footer>
+  <p>
+    All trackers are <strong>fan-made</strong> collectible checklists for personal use only.<br>
+    Not affiliated with, endorsed by, or connected to any of the brands represented.<br>
+    All product names, characters &amp; trademarks are property of their respective owners.
+  </p>
+</footer>
 
 <script>
-// =============================================================
-// DADOS — Todos os Funkos de D&D e Critical Role
-// Sem imagens externas (offline) — placeholder SVG inline
-// =============================================================
-
-const IMGS = {
-  "dnd-573-mind-flayer": "./imgs/dnd-573-mind-flayer.jpg",
-  "dnd-574-minsc-boo": "./imgs/dnd-574-minsc-boo.jpg",
-  "dnd-575-asmodeus": "./imgs/dnd-575-asmodeus.jpg",
-  "dnd-576-gelatinous": "./imgs/dnd-576-gelatinous.jpg",
-  "dnd-782-strahd": "./imgs/dnd-782-strahd.jpg",
-  "dnd-785-xanathar": "./imgs/dnd-785-xanathar.jpg",
-  "dnd-845-mimic": "./imgs/dnd-845-mimic.jpg",
-  "dnd-846-tiamat": "./imgs/dnd-846-tiamat.jpg",
-  "dnd-847-warduke": "./imgs/dnd-847-warduke.jpg",
-  "dnd-853-vecna": "./imgs/dnd-853-vecna.jpg",
-  "dnd-914-gelcube": "./imgs/dnd-914-gelcube.jpg",
-  "dnd-914-gelcube-glow": "./imgs/dnd-914-gelcube-glow.jpg",
-  "dnd-946-bahamut": "./imgs/dnd-946-bahamut.jpg",
-  "dnd-979-lord-soth": "./imgs/dnd-979-lord-soth.jpg",
-  "dnd-1037-lady-pain": "./imgs/dnd-1037-lady-pain.jpg",
-  "dnd-1038-icingdeath": "./imgs/dnd-1038-icingdeath.jpg",
-  "dnd-1069-gelcube-draco": "./imgs/dnd-1069-gelcube-draco.jpg",
-  "dnd-1134-venger": "./imgs/dnd-1134-venger.jpg",
-  "dnd-1168-valindra": "./imgs/dnd-1168-valindra.jpg",
-  "dnd-1169-strahd-shape": "./imgs/dnd-1169-strahd-shape.jpg",
-  "dnd-1170-lolth": "./imgs/dnd-1170-lolth.jpg",
-  "dnd-1199-blue-dragon": "./imgs/dnd-1199-blue-dragon.jpg",
-  "dnd-brass-dragon": "./imgs/dnd-brass-dragon.jpg",
-  "dnd-drizzt-2pack": "./imgs/dnd-drizzt-2pack.jpg",
-  "dnd-drizzt-2pack-2024": "./imgs/dnd-2pack-drizzt.jpg",
-  "hat-1325-edgin": "./imgs/hat-1325-edgin.jpg",
-  "hat-1326-holga": "./imgs/hat-1326-holga.jpg",
-  "hat-1327-simon": "./imgs/hat-1327-simon.jpg",
-  "hat-1328-doric": "./imgs/hat-1328-doric.jpg",
-  "hat-1329-xenk": "./imgs/hat-1329-xenk.jpg",
-  "hat-1330-forge": "./imgs/hat-1330-forge.jpg",
-  "hat-1331-themberchaud": "./imgs/hat-1331-themberchaud.jpg",
-  "hat-1465-owlbear": "./imgs/hat-1465-owlbear.png",
-  "cr-603-vex-broom": "./imgs/cr-603-vex-broom.jpg",
-  "cr-604-grog": "./imgs/cr-604-grog.jpg",
-  "cr-605-keyleth": "./imgs/cr-605-keyleth.jpg",
-  "cr-606-percy": "./imgs/cr-606-percy.jpg",
-  "cr-607-scanlan": "./imgs/cr-607-scanlan.jpg",
-  "cr-608-pike": "./imgs/cr-608-pike.jpg",
-  "cr-609-vex": "./imgs/cr-609-vex.jpg",
-  "cr-610-vax": "./imgs/cr-610-vax.jpg",
-  "cr-611-trinket": "./imgs/cr-611-trinket.jpg"
-};
-const SVG_IMGS = {
-  "578-dnd-asmodeus": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg578dnd%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28232%2C97%2C83%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%28119%2C0%2C0%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glow578dnd%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bg578dnd%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28192%2C57%2C43%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28192%2C57%2C43%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%91%BF%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ED%26D%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EAsmodeus%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "578-dnd-asmodeus-glow": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg578dnd%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28255%2C146%2C40%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%28235%2C49%2C0%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glow578dnd%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bg578dnd%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28255%2C106%2C0%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28255%2C106%2C0%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%94%A5%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ED%26D%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EAsmodeus%20Glo%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "584-dnd-acererak": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg584dnd%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28162%2C162%2C194%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%2838%2C38%2C38%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glow584dnd%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bg584dnd%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28122%2C122%2C154%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28122%2C122%2C154%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%92%80%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ED%26D%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EAcererak%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "590-dnd-bruenor": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg590dnd%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28241%2C186%2C82%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%28102%2C39%2C6%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glow590dnd%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bg590dnd%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28201%2C146%2C42%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28201%2C146%2C42%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ED%26D%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EBruenor%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "591-dnd-cattie-brie": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg591dnd%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28232%2C136%2C72%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%28119%2C49%2C0%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glow591dnd%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bg591dnd%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28192%2C96%2C32%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28192%2C96%2C32%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%8F%B9%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ED%26D%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3ECattie-brie%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-      "cr-bh-chetney": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgcrbhch%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28200%2C136%2C72%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%2887%2C38%2C0%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowcrbhch%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgcrbhch%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28160%2C96%2C32%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28160%2C96%2C32%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%90%BA%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ECR%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EChetney%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "cr-bh-fcg": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgcrbhfc%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28255%2C216%2C104%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%28181%2C126%2C22%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowcrbhfc%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgcrbhfc%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28224%2C176%2C64%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28224%2C176%2C64%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%A4%96%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ECR%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%231a0a00%22%3EFCG%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "cr-bh-fearne": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgcrbhfe%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28130%2C184%2C104%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%2822%2C87%2C22%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowcrbhfe%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgcrbhfe%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2890%2C144%2C64%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2890%2C144%2C64%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%8C%B8%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ECR%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EFearne%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "cr-mn-fjord": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgcrmnfj%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%2882%2C136%2C184%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%286%2C38%2C70%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowcrmnfj%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgcrmnfj%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2842%2C96%2C144%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2842%2C96%2C144%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%E2%9A%93%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ECR%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EFjord%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "cr-vm-keyleth": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgcrvmke%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28114%2C194%2C104%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%2826%2C105%2C30%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowcrvmke%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgcrvmke%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2874%2C154%2C64%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2874%2C154%2C64%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%8D%83%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ECR%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EKeyleth%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "cr-vm-percy": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgcrvmpe%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28136%2C136%2C168%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%2822%2C22%2C22%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowcrvmpe%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgcrvmpe%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2896%2C96%2C128%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2896%2C96%2C128%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%94%AB%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ECR%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EPercy%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "cr-vm-taryon": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgcrvmta%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28255%2C216%2C104%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%28181%2C126%2C22%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowcrvmta%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgcrvmta%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28224%2C176%2C64%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28224%2C176%2C64%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%9B%A1%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ECR%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%231a0a00%22%3ETaryon%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "cr-vm-trinket": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgcrvmtr%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28200%2C136%2C72%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%2887%2C38%2C0%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowcrvmtr%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgcrvmtr%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28160%2C96%2C32%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28160%2C96%2C32%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%90%BB%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ECR%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3ETrinket%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "cr-vm-vex": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgcrvmve%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%2898%2C162%2C88%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%286%2C54%2C6%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowcrvmve%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgcrvmve%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2858%2C122%2C48%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2858%2C122%2C48%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%8F%B9%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ECR%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EVex%27ahlia%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "dnd-miirym": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgdndmiir%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%2840%2C176%2C176%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%280%2C76%2C76%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowdndmiir%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgdndmiir%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%280%2C136%2C136%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%280%2C136%2C136%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%90%89%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ED%26D%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EMiirym%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "hat-doric": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bghatdori%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28114%2C184%2C104%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%2822%2C87%2C22%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowhatdori%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bghatdori%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2874%2C144%2C64%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2874%2C144%2C64%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%A6%85%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3EHAT%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EDoric%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "hat-holga": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bghatholg%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28200%2C136%2C72%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%2887%2C38%2C0%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowhatholg%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bghatholg%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28160%2C96%2C32%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28160%2C96%2C32%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%AA%93%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3EHAT%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EHolga%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
-  "hat-xenk": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bghatxenk%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%2882%2C120%2C168%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%286%2C38%2C70%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glowhatxenk%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bghatxenk%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2842%2C80%2C128%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%2842%2C80%2C128%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3EHAT%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EXenk%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E"
-,
-  "dnd-drizzt-bw": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bgdnddrizztwb%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23404040%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%230a0a0a%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bgdnddrizztwb%29%22/%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22%23888%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22%23888%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%97%A1%EF%B8%8F%3C/text%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ED%26amp%3BD%3C/text%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2214%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EDrizzt%20%28B%26amp%3BW%29%3C/text%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E"
-};
-
-const pops = [
-  // ============================================================
-  // DUNGEONS & DRAGONS — Pop! Games
-  // ============================================================
-  {num:"573", name:"Mind Flayer",                     series:"D&D", col:"D&D Games",    size:'3.75"', excl:null,             chase:false, glow:false, color:"#4a2060", imgk:"dnd-573-mind-flayer"},
-  {num:"574", name:"Minsc & Boo",                     series:"D&D", col:"D&D Games",    size:'3.75"', excl:null,             chase:false, glow:false, color:"#5a3a1a", imgk:"dnd-574-minsc-boo"},
-  {num:"575", name:"Asmodeus",                        series:"D&D", col:"D&D Games",    size:'3.75"', excl:"GameStop",       chase:false, glow:false, color:"#8b0000", imgk:"dnd-575-asmodeus"},
-  {num:"576", name:"Gelatinous Cube",                 series:"D&D", col:"D&D Games",    size:'3.75"', excl:"ECCC 2020",      chase:false, glow:false, color:"#40a060", imgk:"dnd-576-gelatinous"},
-  {num:"782", name:"Strahd with D20",                 series:"D&D", col:"D&D Games",    size:'3.75"', excl:"GameStop",       chase:false, glow:false, color:"#3a0a3a", imgk:"dnd-782-strahd"},
-  {num:"785", name:"Xanathar with D20",               series:"D&D", col:"D&D Games",    size:'3.75"', excl:"FunKon/GameStop",chase:false, glow:false, color:"#1a3a5a", imgk:"dnd-785-xanathar"},
-  {num:"845", name:'Mimic 6" with D20',               series:"D&D", col:"D&D Games",    size:'6"',    excl:"GameStop",       chase:false, glow:false, color:"#5a3a1a", imgk:"dnd-845-mimic"},
-  {num:"846", name:'Tiamat 10" with D20',             series:"D&D", col:"D&D Games",    size:'10"',   excl:"NYCC/GameStop",  chase:false, glow:false, color:"#8b0000", imgk:"dnd-846-tiamat"},
-  {num:"847", name:"Warduke with D20",                series:"D&D", col:"D&D Games",    size:'3.75"', excl:"GameStop",       chase:false, glow:false, color:"#1a1a4a", imgk:"dnd-847-warduke"},
-  {num:"853", name:"Vecna with D20",                  series:"D&D", col:"D&D Games",    size:'3.75"', excl:"GameStop",       chase:false, glow:false, color:"#2a0a2a", imgk:"dnd-853-vecna"},
-  {num:"914", name:"Gelatinous Cube",                 series:"D&D", col:"D&D Games",    size:'3.75"', excl:"WonderCon 2023", chase:false, glow:false, color:"#40a060", imgk:"dnd-914-gelcube"},
-  {num:"914", name:"Gelatinous Cube (Glow)",          series:"D&D", col:"D&D Games",    size:'3.75"', excl:"WonderCon/Funko",chase:false, glow:true,  color:"#60d080", imgk:"dnd-914-gelcube-glow"},
-  {num:"946", name:'Bahamut 6"',                      series:"D&D", col:"D&D Games",    size:'6"',    excl:"GameStop",       chase:false, glow:false, color:"#c0a000", imgk:"dnd-946-bahamut"},
-  {num:"979", name:"Lord Soth (Glow)",                series:"D&D", col:"D&D Games",    size:'3.75"', excl:"SDCC 2024",      chase:false, glow:true,  color:"#4a0a4a", imgk:"dnd-979-lord-soth"},
-  {num:"1037",name:"Lady of Pain",                    series:"D&D", col:"D&D Games",    size:'5.4"',  excl:null,             chase:false, glow:false, color:"#b09000", imgk:"dnd-1037-lady-pain"},
-  {num:"1038",name:'Icingdeath 5.5"',                 series:"D&D", col:"D&D Games",    size:'5.5"',  excl:null,             chase:false, glow:false, color:"#a0c0d0", imgk:"dnd-1038-icingdeath"},
-  {num:"1069",name:"Gelatinous Cube with Dracolich",  series:"D&D", col:"D&D Games",    size:'3.75"', excl:"GameStop",       chase:false, glow:true,  color:"#8040a0", imgk:"dnd-1069-gelcube-draco"},
-  {num:"1134",name:"Venger (Book Cover)",             series:"D&D", col:"D&D Games",    size:'3.75"', excl:null,             chase:false, glow:false, color:"#3a1a5a", imgk:"dnd-1134-venger"},
-  {num:"1168",name:"Valindra Shadowmantle",           series:"D&D", col:"D&D Games",    size:'3.75"', excl:null,             chase:false, glow:false, color:"#2a0a4a", imgk:"dnd-1168-valindra"},
-  {num:"1169",name:"Strahd (Shapechanger)",           series:"D&D", col:"D&D Games",    size:'3.75"', excl:null,             chase:false, glow:false, color:"#3a0a3a", imgk:"dnd-1169-strahd-shape"},
-  {num:"1170",name:"Lolth the Spider Queen",          series:"D&D", col:"D&D Games",    size:'3.75"', excl:null,             chase:false, glow:false, color:"#5a1a6a", imgk:"dnd-1170-lolth"},
-  {num:"1199",name:"Blue Dragon Wyrmling",            series:"D&D", col:"D&D Games",    size:'3.75"', excl:"Funko Shop",     chase:true,  glow:false, color:"#2060a0", imgk:"dnd-1199-blue-dragon"},
-  {num:"",    name:"Brass Dragon Wyrmling",           series:"D&D", col:"D&D Games",    size:'3.75"', excl:null,             chase:false, glow:false, color:"#c07000", imgk:"dnd-brass-dragon"},
-  {num:"",    name:"Drizzt Do'Urden & Guenhwyvar",          series:"D&D", col:"D&D Games",    size:'3.75"', excl:"GameStop",       chase:false, glow:false, color:"#1a3a5a", imgk:"dnd-drizzt-2pack"},
-  {num:"",    name:"Drizzt Do'Urden & Guenhwyvar (2024)",   series:"D&D", col:"D&D Games",    size:'3.75"', excl:"Funko Shop",     chase:false, glow:false, color:"#1a3a5a", imgk:"dnd-drizzt-2pack-2024"},
-
-  // ============================================================
-  // DUNGEONS & DRAGONS — Honor Among Thieves (2023)
-  // ============================================================
-  {num:"1325",name:"Edgin",                           series:"D&D", col:"HAT",          size:'3.75"', excl:null,             chase:false, glow:false, color:"#5a3a1a", imgk:"hat-1325-edgin"},
-  {num:"1326",name:"Holga",                           series:"D&D", col:"HAT",          size:'3.75"', excl:null,             chase:false, glow:false, color:"#6b3a00", imgk:"hat-1326-holga"},
-  {num:"1327",name:"Simon",                           series:"D&D", col:"HAT",          size:'3.75"', excl:null,             chase:false, glow:false, color:"#2a3a6a", imgk:"hat-1327-simon"},
-  {num:"1328",name:"Doric",                           series:"D&D", col:"HAT",          size:'3.75"', excl:null,             chase:false, glow:false, color:"#2a6a2a", imgk:"hat-1328-doric"},
-  {num:"1329",name:"Xenk",                            series:"D&D", col:"HAT",          size:'3.75"', excl:null,             chase:false, glow:false, color:"#1a3a5a", imgk:"hat-1329-xenk"},
-  {num:"1330",name:"Forge",                           series:"D&D", col:"HAT",          size:'3.75"', excl:null,             chase:false, glow:false, color:"#4a3a1a", imgk:"hat-1330-forge"},
-  {num:"1331",name:"Themberchaud",                    series:"D&D", col:"HAT",          size:'3.75"', excl:"Walmart",        chase:false, glow:false, color:"#8b1a1a", imgk:"hat-1331-themberchaud"},
-  {num:"1465",name:"Owlbear",                         series:"D&D", col:"HAT",          size:'3.75"', excl:"Fall Convention 2023", chase:false, glow:false, color:"#e0e0e0", imgk:"hat-1465-owlbear"},
-
-  // ============================================================
-  // VOX MACHINA — Vox Machina (2020)
-  // ============================================================
-  {num:"603", name:"Vex'ahlia (on Broom)",           series:"CR",  col:"Vox Machina",  size:'3.75"', excl:"SDCC 2020",      chase:false, glow:false, color:"#2a6a2a", imgk:"cr-603-vex-broom"},
-  {num:"604", name:"Grog Strongjaw",                  series:"CR",  col:"Vox Machina",  size:'3.75"', excl:null,             chase:false, glow:false, color:"#5a3a1a", imgk:"cr-604-grog"},
-  {num:"605", name:"Keyleth",                         series:"CR",  col:"Vox Machina",  size:'3.75"', excl:null,             chase:false, glow:false, color:"#2e7d32", imgk:"cr-605-keyleth"},
-  {num:"606", name:"Percival de Rolo III",            series:"CR",  col:"Vox Machina",  size:'3.75"', excl:null,             chase:false, glow:false, color:"#2a2a2a", imgk:"cr-606-percy"},
-  {num:"607", name:"Scanlan Shorthalt",               series:"CR",  col:"Vox Machina",  size:'3.75"', excl:null,             chase:false, glow:false, color:"#8b6914", imgk:"cr-607-scanlan"},
-  {num:"608", name:"Pike Trickfoot",                  series:"CR",  col:"Vox Machina",  size:'3.75"', excl:null,             chase:false, glow:false, color:"#c0a000", imgk:"cr-608-pike"},
-  {num:"609", name:"Vex'ahlia",                      series:"CR",  col:"Vox Machina",  size:'3.75"', excl:null,             chase:false, glow:false, color:"#2a6a2a", imgk:"cr-609-vex"},
-  {num:"610", name:"Vax'ildan",                      series:"CR",  col:"Vox Machina",  size:'3.75"', excl:null,             chase:false, glow:false, color:"#1a1a3a", imgk:"cr-610-vax"},
-  {num:"611", name:"Trinket",                         series:"CR",  col:"Vox Machina",  size:'6"',    excl:"Specialty",      chase:false, glow:false, color:"#6b3a00", imgk:"cr-611-trinket"},
+const funkoProjects=[
+  {
+    franchise:"Blizzard Entertainment",
+    type:"Funko Pop! · Games Collection",
+    eyebrow:"Funko Pop! · Games Collection",
+    lines:["OVERWATCH"],
+    fonts:["'Bebas Neue',sans-serif"],
+    sizes:["2.8rem"],
+    spacing:["8px"],
+    colors:["#e8f4ff"],
+    sub:"Complete checklist — figures & variants",
+    desc:"All Funko Pops from the Overwatch universe — Wave 1 through OW2, exclusives, keychains and multi-packs.",
+    url:"https://bogus13pt.github.io/overwatch-funkos/",
+    accent:"#4db8ff",bg:"linear-gradient(160deg,#061428 0%,#0a2040 100%)",eyebrowColor:"#4db8ff"
+  },
+  {
+    franchise:"Blizzard Entertainment",
+    type:"Funko Pop! · Games Collection",
+    eyebrow:"Funko Pop! · Games Collection",
+    lines:["BLIZZARD","EXCL. OVERWATCH"],
+    fonts:["'Bebas Neue',sans-serif","'Barlow Condensed',sans-serif"],
+    sizes:["2.8rem","0.85rem"],
+    spacing:["8px","4px"],
+    colors:["#e8f4ff","rgba(0,168,255,0.6)"],
+    sub:"Complete collection — figures & variants",
+    desc:"Funko Pops across the full Blizzard universe — Diablo, StarCraft, Hearthstone, Heroes of the Storm and more.",
+    url:"https://bogus13pt.github.io/blizzard-funkos/",
+    accent:"#00a8ff",bg:"linear-gradient(160deg,#04111f 0%,#0a1e38 100%)",eyebrowColor:"#00a8ff"
+  },
+  {
+    franchise:"Bungie",
+    type:"Funko Pop! · Games · Bungie",
+    eyebrow:"Funko Pop! · Games · Bungie",
+    lines:["DESTINY"],
+    fonts:["'Bebas Neue',sans-serif"],
+    sizes:["2.8rem"],
+    spacing:["8px"],
+    colors:["#f5c400"],
+    sub:"Complete collector checklist — figures & variants",
+    desc:"Every Guardian, Exotic and variant from the Destiny universe — Hunter, Titan and Warlock all represented.",
+    url:"https://bogus13pt.github.io/destiny-funkos/",
+    accent:"#f5c400",bg:"linear-gradient(160deg,#120b00 0%,#241800 100%)",eyebrowColor:"#f5c400"
+  },
+  {
+    franchise:"Wizards of the Coast",
+    type:"Funko Pop! · Tabletop & RPG",
+    eyebrow:"Funko Pop! · Tabletop & RPG",
+    lines:["DUNGEONS & DRAGONS"],
+    fonts:["'Bebas Neue',sans-serif"],
+    sizes:["1.85rem"],
+    spacing:["4px"],
+    colors:["#f97316"],
+    sub:"Complete collection — figures & variants",
+    desc:"Official D&D Funko Pop! figures — all waves and variants included.",
+    url:"https://bogus13pt.github.io/dungeons-funkos/",
+    accent:"#c84b11",bg:"linear-gradient(160deg,#120500 0%,#200a00 100%)",eyebrowColor:"#c84b11"
+  },
 ];
 
-// =============================================================
-// CORES POR WAVE / SÉRIE
-// =============================================================
-const waveColors = {"D&D Games":"#c0392b","HAT":"#e74c3c","Vox Machina":"#e67e22"};
+const toyProjects=[
+  {
+    franchise:"Activision",
+    type:"Portal of Power · Collection Checklist",
+    eyebrow:"Portal of Power · Collection Checklist",
+    lines:["SKYLANDERS"],
+    fonts:["'Bangers',cursive"],
+    sizes:["2.6rem"],
+    spacing:["6px"],
+    colors:["#38d4ff"],
+    sub:"Every figure placed on the Portal",
+    desc:"Full checklist — every Skylander from Spyro's Adventure to Imaginators, Traps, Vehicles and Creation Crystals.",
+    url:"https://bogus13pt.github.io/skylanders/",
+    accent:"#38d4ff",bg:"linear-gradient(160deg,#050e1e 0%,#0c1c38 100%)",eyebrowColor:"#38d4ff"
+  },
+  {
+    franchise:"Ubisoft",
+    type:"Toys-to-Life · Complete Physical Checklist",
+    eyebrow:"Toys-to-Life · Complete Physical Checklist",
+    lines:["STARLINK","BATTLE FOR ATLAS"],
+    fonts:["'Bebas Neue',sans-serif","'Bebas Neue',sans-serif"],
+    sizes:["2.3rem","1.5rem"],
+    spacing:["6px","4px"],
+    colors:["#f97316","#fb923c"],
+    sub:"Every physical toy released",
+    desc:"Complete inventory of every ship, pilot and weapon pack from Ubisoft's modular space toys-to-life series.",
+    url:"https://bogus13pt.github.io/starlink/",
+    accent:"#f97316",bg:"linear-gradient(160deg,#0e0600 0%,#1c0c00 100%)",eyebrowColor:"#f97316"
+  },
+  {
+    franchise:"LEGO / Warner Bros",
+    type:"Toy Pad · Complete Collection Checklist",
+    eyebrow:"Toy Pad · Complete Collection Checklist",
+    lines:["LEGO","DIMENSIONS"],
+    fonts:["'Bangers',cursive","'Bangers',cursive"],
+    sizes:["2.5rem","2.1rem"],
+    spacing:["5px","3px"],
+    colors:["#fbbf24","#fde68a"],
+    sub:"Every pack ever released — 9 waves",
+    desc:"Every LEGO Dimensions starter, level pack, team pack and fun pack — all waves, all franchises.",
+    url:"https://bogus13pt.github.io/legodimensions/",
+    accent:"#fbbf24",bg:"linear-gradient(160deg,#110900 0%,#1e1000 100%)",eyebrowColor:"#fbbf24"
+  },
+];
 
-const waveFilters = ["All", "D&D Games", "HAT", "Vox Machina"];
-const seriesAll    = ["All", "D&D", "Critical Role"];
+const gamesProjects=[
+  {
+    franchise:"EA · Activision · Microsoft · Blizzard",
+    type:"Physical Games · Collection Tracker",
+    eyebrow:"Physical Games · Collection Tracker",
+    lines:["WAR CHEST"],
+    fonts:["'Bebas Neue',sans-serif"],
+    sizes:["2.8rem"],
+    spacing:["8px"],
+    colors:["#22c55e"],
+    sub:"Every physical release — 5 franchises",
+    desc:"Complete tracker for physical game releases — Battlefield, Call of Duty, Halo, Gears of War and Blizzard.",
+    url:"https://bogus13pt.github.io/games/",
+    accent:"#22c55e",bg:"linear-gradient(160deg,#030e07 0%,#071a0d 100%)",eyebrowColor:"#22c55e"
+  },
+];
 
-let activeWave   = "All";
-let activeSeries = "All";
-let viewMode     = "grid";
+const consolesProjects=[
+  {
+    franchise:"Gaming Hardware Archive",
+    type:"Gaming Hardware Archive · Collection Checklist",
+    eyebrow:"Gaming Hardware Archive · Checklist",
+    lines:["CONSOLE","ARCHIVE"],
+    fonts:["'Bebas Neue',sans-serif","'Bebas Neue',sans-serif"],
+    sizes:["2.5rem","2.0rem"],
+    spacing:["7px","5px"],
+    colors:["#a78bfa","#c4b5fd"],
+    sub:"All generations · All manufacturers",
+    desc:"Complete archive of every home console, handheld and variant — 13 manufacturers, all generations covered.",
+    url:"https://bogus13pt.github.io/consoles/",
+    accent:"#a78bfa",bg:"linear-gradient(160deg,#0a0515 0%,#130925 100%)",eyebrowColor:"#a78bfa"
+  },
+];
 
-const storageKey = "dnd_cr_owned";
-// localStorage com fallback para ambientes que o bloqueiam (file://, alguns GitHub Pages)
-let _owned_data = [];
-try { _owned_data = JSON.parse(localStorage.getItem(storageKey) || "[]"); } catch(e) { _owned_data = []; }
-const owned = new Set(_owned_data);
-const allItems = [...pops];
+function makeCard(p){
+  const a=document.createElement('a');
+  a.className='card';a.href=p.url;a.target='_blank';a.rel='noopener noreferrer';
+  a.style.setProperty('--accent',p.accent);
 
-// =============================================================
-// Helpers
-// =============================================================
-function sizeStyle(s) {
-  if (s === '6"')  return {bg:"#b45309", fg:"#fff"};
-  if (s === '10"') return {bg:"#c0392b", fg:"#fff"};
-  return {bg:"rgba(255,255,255,0.07)", fg:"#9a7d52"};
-}
-function itemKey(d) { return d.num + "|" + d.name; }
+  const banner=document.createElement('div');banner.className='card-banner';
+  const bg=document.createElement('div');bg.className='card-banner-bg';bg.style.background=p.bg;
+  banner.appendChild(bg);
 
-// Placeholder SVG colorido por personagem
-function buildPlaceholderSVG(name, color) {
-  const initials = name.replace(/\s*\(.*?\)/g,"").trim().split(" ").map(w=>w[0]).slice(0,2).join("").toUpperCase();
-  const enc = encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 170">
-    <rect width="160" height="170" fill="${color}18"/>
-    <circle cx="80" cy="72" r="38" fill="${color}25" stroke="${color}50" stroke-width="1.5"/>
-    <text x="80" y="82" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,serif" font-size="26" fill="${color}" opacity="0.8">${initials}</text>
-    <text x="80" y="136" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="${color}" opacity="0.4" font-weight="700" letter-spacing="1">${name.replace(/\(.*?\)/g,"").trim().toUpperCase().substring(0,20)}</text>
-    <path d="M20 100 Q80 90 140 100" stroke="${color}30" stroke-width="1" fill="none"/>
-    <polygon points="80,20 86,36 102,36 89,46 94,62 80,52 66,62 71,46 58,36 74,36" fill="${color}20" stroke="${color}40" stroke-width="1"/>
-  </svg>`);
-  return "data:image/svg+xml," + enc;
-}
+  const ey=document.createElement('div');ey.className='banner-eyebrow';ey.style.color=p.eyebrowColor;ey.textContent=p.eyebrow;
+  banner.appendChild(ey);
 
-// =============================================================
-// Card builder
-// =============================================================
-function makeCard(data, delay) {
-  const wc = waveColors[data.col] || "#c9922a";
-  const key = itemKey(data);
-  const isOwned = owned.has(key);
-
-  const card = document.createElement("div");
-  card.className = "card" + (isOwned ? " owned" : "");
-  card.style.animationDelay = delay + "s";
-
-  // Imagem
-  const imgArea = document.createElement("div"); imgArea.className = "card-img";
-  const img = document.createElement("img"); img.alt = data.name; img.loading = "eager"; img.decoding = "async";
-  // Prioridade: 1) imagem real em imgs/, 2) SVG temático inline, 3) SVG placeholder genérico
-  if (data.imgk && IMGS[data.imgk]) {
-    img.src = IMGS[data.imgk];
-    img.onerror = () => {
-      img.onerror = null;
-      img.src = SVG_IMGS[data.imgk] || buildPlaceholderSVG(data.name, data.col || wc);
-    };
-  } else if (data.imgk && SVG_IMGS[data.imgk]) {
-    img.src = SVG_IMGS[data.imgk];
-  } else {
-    img.src = buildPlaceholderSVG(data.name, data.col || wc);
-  }
-  imgArea.appendChild(img);
-
-  // Badge de wave
-  const badge = document.createElement("div");
-  badge.className = "wave-badge";
-  badge.style.background = wc + "dd";
-  badge.textContent = data.col.replace("D&D ","").replace("HAT ","Film ");
-  imgArea.appendChild(badge);
-
-  // Botão de owned
-  const ownBtn = document.createElement("div");
-  ownBtn.className = "owned-btn" + (isOwned ? " owned" : "");
-  ownBtn.textContent = "✓";
-  ownBtn.addEventListener("click", e => {
-    e.stopPropagation();
-    if (owned.has(key)) { owned.delete(key); ownBtn.classList.remove("owned"); card.classList.remove("owned"); }
-    else { owned.add(key); ownBtn.classList.add("owned"); card.classList.add("owned"); }
-    try { localStorage.setItem(storageKey, JSON.stringify([...owned])); } catch(e) {}
-    updateStats();
+  const tw=document.createElement('div');tw.className='banner-title-wrap';
+  p.lines.forEach((line,i)=>{
+    const d=document.createElement('div');
+    d.style.cssText=`font-family:${p.fonts[i]};font-size:${p.sizes[i]};letter-spacing:${p.spacing[i]};color:${p.colors[i]};text-shadow:0 0 28px ${p.accent}55,0 2px 0 rgba(0,0,0,0.7);line-height:.9;`;
+    d.textContent=line;tw.appendChild(d);
   });
-  imgArea.appendChild(ownBtn);
-  card.appendChild(imgArea);
+  banner.appendChild(tw);
 
-  // Tags de tamanho / chase / glow / exclusivo
-  const ss = sizeStyle(data.size);
-  let tagsHtml = "";
-  if (data.size) tagsHtml += `<span class="size-tag" style="background:${ss.bg};color:${ss.fg}">${data.size}</span>`;
-  if (data.chase) tagsHtml += `<span class="chase-tag">Chase</span>`;
-  if (data.glow)  tagsHtml += `<span class="glow-tag">Glow</span>`;
-  if (data.excl)  tagsHtml += `<span class="excl-tag">${data.excl}</span>`;
+  const sub=document.createElement('div');sub.className='banner-sub';sub.style.color=p.eyebrowColor;sub.textContent=p.sub;
+  banner.appendChild(sub);
 
-  // Cor da série no card
-  const seriesColor = data.series === "D&D" ? "#c0392b" : "#9b59b6";
-  const seriesLabel = data.series === "D&D" ? "Dungeons &amp; Dragons" : "Critical Role";
+  const tb=document.createElement('div');tb.className='card-type-badge';tb.textContent=p.type;
+  banner.appendChild(tb);
 
-  const body = document.createElement("div"); body.className = "card-body";
-  body.innerHTML = `
-    ${data.num ? `<div class="card-num">#${data.num}</div>` : ""}
-    <div class="card-series" style="color:${seriesColor}">${seriesLabel}</div>
-    <div class="card-name">${data.name}</div>
-    <div class="card-tags">${tagsHtml}</div>
+  a.appendChild(banner);
+
+  const body=document.createElement('div');body.className='card-body';
+  body.innerHTML=`
+    <div class="card-franchise">${p.franchise}</div>
+    <div class="card-desc">${p.desc}</div>
+    <div class="card-cta"><span>Open Tracker</span><span class="card-arrow">→</span></div>
   `;
-  card.appendChild(body);
+  a.appendChild(body);
 
-  // Hover
-  card.addEventListener("mouseenter", () => {
-    card.style.borderColor = wc + "70";
-    card.style.boxShadow = `0 14px 36px ${wc}22`;
-  });
-  card.addEventListener("mouseleave", () => {
-    card.style.borderColor = "";
-    card.style.boxShadow = "";
-  });
-  return card;
+  a.addEventListener('mouseenter',()=>{a.style.borderColor=p.accent+'55';a.style.boxShadow=`0 16px 50px ${p.accent}20,0 4px 14px rgba(0,0,0,0.5)`;});
+  a.addEventListener('mouseleave',()=>{a.style.borderColor='';a.style.boxShadow='';});
+  return a;
 }
 
-// =============================================================
-// Render
-// =============================================================
-// ============================================================
-// Config dos separadores de subcategoria
-// ============================================================
-const COL_SEP_CONFIG = {
-  "D&D Games": {
-    cls:"sep-dnd-wave1", icon:"⚔️",
-    title:"Dungeons & Dragons",
-    sub:"Pop! Games · #573 ao #1199 · 2019–2025"
-  },
-  "HAT": {
-    cls:"sep-hat", icon:"🎬",
-    title:"Dungeons & Dragons — Honor Among Thieves",
-    sub:"Pop! Movies · Filme 2023 · #1325–1331"
-  },
-  "Vox Machina": {
-    cls:"sep-vm", icon:"🔥",
-    title:"Critical Role — Vox Machina",
-    sub:"Pop! Games · Campaign 1 · #603–611"
-  },
-};
-
-// Ordem canónica das waves
-const COL_ORDER = ["D&D Games", "HAT", "Vox Machina"];
-
-function makeSeparator(wave, count) {
-  const cfg = COL_SEP_CONFIG[wave] || { cls:"sep-dnd-wave1", icon:"🎲", title:wave, sub:"" };
-  const wrapper = document.createElement("div");
-  wrapper.className = "wave-sep";
-  wrapper.innerHTML = `
-    <div class="wave-sep-inner ${cfg.cls}">
-      <div class="wave-sep-accent"></div>
-      <div class="wave-sep-icon">${cfg.icon}</div>
-      <div class="wave-sep-body">
-        <div class="wave-sep-title">${cfg.title}</div>
-        ${cfg.sub ? `<div class="wave-sep-sub">${cfg.sub}</div>` : ""}
-      </div>
-      <div class="wave-sep-count">${count}<span>figuras</span></div>
-    </div>`;
-  return wrapper;
-}
-
-function render() {
-  const q = document.getElementById("search").value.toLowerCase().trim();
-  const out = document.getElementById("output");
-  out.innerHTML = "";
-
-  const filtered = pops.filter(p => {
-    const matchSeries = activeSeries === "All"
-      || (activeSeries === "Critical Role" && p.series === "CR")
-      || (activeSeries === "D&D" && p.series === "D&D");
-    const matchWave = activeWave === "All" || p.col === activeWave;
-    const matchQ = !q
-      || p.name.toLowerCase().includes(q)
-      || p.num.includes(q)
-      || p.col.toLowerCase().includes(q)
-      || p.series.toLowerCase().includes(q);
-    return matchSeries && matchWave && matchQ;
-  });
-
-  if (!filtered.length) {
-    const g = document.createElement("div"); g.className = "grid";
-    g.innerHTML = `<div class="empty"><div class="empty-icon">&#9828;</div><p>Nenhuma figura corresponde a "${q || activeWave}"</p></div>`;
-    out.appendChild(g);
-    document.getElementById("countPill").textContent = "Sem resultados";
-    updateStats();
-    return;
-  }
-
-  // Quando filtro de wave específico activo OU pesquisa OU lista-view: sem separadores
-  const showSeps = activeWave === "All" && !q && viewMode !== "list";
-
-  if (showSeps) {
-    // Agrupar por wave na ordem canónica
-    const byWave = {};
-    filtered.forEach(p => {
-      if (!byWave[p.col]) byWave[p.col] = [];
-      byWave[p.col].push(p);
-    });
-
-    let cardIdx = 0;
-    COL_ORDER.forEach(wave => {
-      if (!byWave[wave] || !byWave[wave].length) return;
-      const items = byWave[wave];
-
-      // Separador
-      out.appendChild(makeSeparator(wave, items.length));
-
-      // Grid desta wave
-      const g = document.createElement("div");
-      g.className = "grid";
-      items.forEach(p => g.appendChild(makeCard(p, Math.min(cardIdx++ * 0.01, 0.25))));
-      out.appendChild(g);
-    });
-  } else {
-    // Vista simples (filtro activo, pesquisa, ou lista)
-    const g = document.createElement("div");
-    g.className = "grid" + (viewMode === "list" ? " list-view" : "");
-    filtered.forEach((p, i) => g.appendChild(makeCard(p, Math.min(i * 0.012, 0.28))));
-    out.appendChild(g);
-  }
-
-  document.getElementById("countPill").textContent = `A mostrar ${filtered.length} item${filtered.length !== 1 ? "s" : ""}`;
-  updateStats();
-}
-
-function updateStats() {
-  const t = allItems.length;
-  const n = owned.size;
-  const pct = t > 0 ? Math.round(n / t * 100) : 0;
-  const dndCount = allItems.filter(p => p.series === "D&D").length;
-  const crCount  = allItems.filter(p => p.series === "CR").length;
-
-  document.getElementById("statOwned").textContent  = n;
-  document.getElementById("statTotal").textContent  = t;
-  document.getElementById("statPct").textContent    = pct + "%";
-  document.getElementById("statDnd").textContent    = dndCount;
-  document.getElementById("statCr").textContent     = crCount;
-  document.getElementById("totalCount").textContent = t;
-  document.getElementById("ownedCount").textContent = `✓ ${n} owned`;
-}
-
-function setView(mode) {
-  viewMode = mode;
-  document.getElementById("gridViewBtn").classList.toggle("active", mode === "grid");
-  document.getElementById("listViewBtn").classList.toggle("active", mode === "list");
-  render();
-}
-
-// =============================================================
-// Filtros de Series
-// =============================================================
-const seriesEl = document.getElementById("seriesFilters");
-const seriesColors = {"All":"#c9922a","D&D":"#c0392b","Critical Role":"#9b59b6"};
-seriesAll.forEach(s => {
-  const btn = document.createElement("button");
-  btn.className = "filter-btn" + (s === "All" ? " active" : "");
-  btn.textContent = s;
-  const sc = seriesColors[s] || "#c9922a";
-  if (s === "All") btn.style.cssText = `background:${sc};color:#fff;border-color:${sc}`;
-  btn.addEventListener("click", () => {
-    activeSeries = s === "Critical Role" ? "All_CR" : s;
-    // hack simples: "All_CR" → filtrar por series=="CR"
-    if (s === "Critical Role") activeSeries = "Critical Role";
-    else activeSeries = s;
-    document.querySelectorAll("#seriesFilters .filter-btn").forEach(b => { b.classList.remove("active"); b.style.cssText = ""; });
-    btn.classList.add("active"); btn.style.cssText = `background:${sc};color:#fff;border-color:${sc}`;
-    render();
-  });
-  seriesEl.appendChild(btn);
-});
-
-// =============================================================
-// Filtros de Wave
-// =============================================================
-const filtersEl = document.getElementById("filters");
-waveFilters.forEach(w => {
-  const btn = document.createElement("button");
-  btn.className = "filter-btn" + (w === "All" ? " active" : "");
-  btn.textContent = w;
-  const wc = w === "All" ? "#c9922a" : (waveColors[w] || "#c9922a");
-  if (w === "All") btn.style.cssText = `background:${wc};color:#fff;border-color:${wc}`;
-  btn.addEventListener("click", () => {
-    activeWave = w;
-    document.querySelectorAll("#filters .filter-btn").forEach(b => { b.classList.remove("active"); b.style.cssText = ""; });
-    btn.classList.add("active"); btn.style.cssText = `background:${wc};color:#fff;border-color:${wc}`;
-    render();
-  });
-  filtersEl.appendChild(btn);
-});
-
-// =============================================================
-// Init
-// =============================================================
-updateStats();
-render();
-document.getElementById("search").addEventListener("input", render);
-
-// ============================================================
-// EXPORT / IMPORT — sincronização entre dispositivos
-// ============================================================
-
-let mergeMode = "merge"; // "merge" | "replace"
-
-// --- Modal open/close ---
-function openSync(tab) {
-  switchTab(tab);
-  if (tab === "export") refreshExportStats();
-  document.getElementById("syncModal").classList.add("open");
-  document.body.style.overflow = "hidden";
-}
-
-function closeSync() {
-  document.getElementById("syncModal").classList.remove("open");
-  document.body.style.overflow = "";
-  clearSyncMsg();
-}
-
-function closeSyncIfOutside(e) {
-  if (e.target === document.getElementById("syncModal")) closeSync();
-}
-
-// Close com Escape
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeSync();
-});
-
-// --- Tab switching ---
-function switchTab(tab) {
-  ["export","import"].forEach(t => {
-    document.getElementById("tab" + capitalize(t)).classList.toggle("active", t === tab);
-    document.getElementById("panel"  + capitalize(t)).classList.toggle("active", t === tab);
-  });
-  clearSyncMsg();
-}
-
-function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
-// --- Merge mode selection ---
-function selectMerge(mode) {
-  mergeMode = mode;
-  document.getElementById("radioMerge").classList.toggle("selected",   mode === "merge");
-  document.getElementById("radioReplace").classList.toggle("selected", mode === "replace");
-}
-
-// --- Export stats panel ---
-function refreshExportStats() {
-  const total = allItems.length;
-  const n     = owned.size;
-  const pct   = total > 0 ? Math.round(n / total * 100) : 0;
-  const dnd   = allItems.filter(p => p.series === "D&D").length;
-  const cr    = allItems.filter(p => p.series === "CR").length;
-  const ownedDnd = [...owned].filter(k => {
-    const item = allItems.find(p => itemKey(p) === k);
-    return item && item.series === "D&D";
-  }).length;
-  const ownedCr = n - ownedDnd;
-
-  document.getElementById("exportStats").innerHTML = `
-    <div class="sync-stat">
-      <div class="sync-stat-val">${n}</div>
-      <div class="sync-stat-lbl">In collection</div>
-    </div>
-    <div class="sync-stat">
-      <div class="sync-stat-val">${pct}%</div>
-      <div class="sync-stat-lbl">Complete</div>
-    </div>
-    <div class="sync-stat">
-      <div class="sync-stat-val" style="color:#c0392b">${ownedDnd}</div>
-      <div class="sync-stat-lbl">D&amp;D</div>
-    </div>
-    <div class="sync-stat">
-      <div class="sync-stat-val" style="color:#9b59b6">${ownedCr}</div>
-      <div class="sync-stat-lbl">Crit. Role</div>
-    </div>`;
-}
-
-// --- Export ---
-function doExport() {
-  const data = {
-    app:     "Funko D&D & Critical Role Collection",
-    version: "1.0",
-    exported: new Date().toISOString(),
-    total:   allItems.length,
-    owned:   owned.size,
-    items:   [...owned]
-  };
-
-  const json = JSON.stringify(data, null, 2);
-  const blob = new Blob([json], { type: "application/json" });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  const date = new Date().toISOString().slice(0,10);
-  a.href     = url;
-  a.download = `colecao-dnd-cr-${date}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-// --- Import: file input change ---
-function loadFile(input) {
-  const file = input.files[0];
-  if (file) processFile(file);
-  input.value = ""; // reset para permitir re-importar o mesmo ficheiro
-}
-
-// --- Import: drag & drop ---
-function dragOver(e) {
-  e.preventDefault();
-  document.getElementById("syncDrop").classList.add("drag");
-}
-
-function dragLeave() {
-  document.getElementById("syncDrop").classList.remove("drag");
-}
-
-function dropFile(e) {
-  e.preventDefault();
-  dragLeave();
-  const file = e.dataTransfer.files[0];
-  if (file) processFile(file);
-}
-
-// --- Processar ficheiro imported ---
-function processFile(file) {
-  if (!file.name.endsWith(".json") && file.type !== "application/json") {
-    showMsg("Invalid file. Use a .json exported by this app.", "err");
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const data = JSON.parse(e.target.result);
-
-      // Validação básica
-      if (!Array.isArray(data.items)) {
-        showMsg("Invalid format. The file does not contain a valid item list.", "err");
-        return;
-      }
-
-      const importedKeys = data.items.filter(k => typeof k === "string");
-
-      if (mergeMode === "replace") {
-        // Substituir tudo
-        owned.clear();
-        importedKeys.forEach(k => owned.add(k));
-      } else {
-        // Juntar (merge)
-        importedKeys.forEach(k => owned.add(k));
-      }
-
-      // Persistir
-      try { localStorage.setItem(storageKey, JSON.stringify([...owned])); } catch(e) {}
-
-      // Actualizar UI
-      render();
-      refreshExportStats();
-
-      const added = importedKeys.length;
-      const mode  = mergeMode === "replace" ? "replaced" : "juntada";
-      showMsg(`✓ Wave ${mode}! ${owned.size} figuras na coleção (${added} importadas).`, "ok");
-
-      // Refresca os cards visuais (owned state)
-      document.querySelectorAll(".card").forEach(card => {
-        // O render() já foi chamado — os cards são recriados
-      });
-
-    } catch(err) {
-      showMsg("Error reading file. Make sure it is a valid JSON.", "err");
-    }
-  };
-  reader.readAsText(file);
-}
-
-// --- Mensagem de feedback ---
-function showMsg(text, type) {
-  const el = document.getElementById("syncMsg");
-  el.textContent = text;
-  el.className = `sync-msg ${type}`;
-  el.style.display = "block";
-}
-
-function clearSyncMsg() {
-  const el = document.getElementById("syncMsg");
-  if (el) { el.style.display = "none"; el.textContent = ""; }
-}
+funkoProjects.forEach(p=>document.getElementById('funkos').appendChild(makeCard(p)));
+toyProjects.forEach(p=>document.getElementById('toys').appendChild(makeCard(p)));
+gamesProjects.forEach(p=>document.getElementById('games-grid').appendChild(makeCard(p)));
+consolesProjects.forEach(p=>document.getElementById('consoles-grid').appendChild(makeCard(p)));
 </script>
 </body>
 </html>
