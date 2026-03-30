@@ -184,7 +184,7 @@ h1 .amp{
   margin-top:4px;
   font-family:'Arial',sans-serif
 }
-/* Faixa de série (D&D vs Critical Role) */
+/* Faixa de series (D&D vs Critical Role) */
 .series-strip{
   max-width:1240px;
   margin:28px auto 0;
@@ -343,7 +343,7 @@ input[type="text"]::placeholder{color:var(--muted);font-style:italic}
 }
 .ph-num{font-family:'Georgia',serif;font-size:1.8rem;letter-spacing:1px;opacity:.9}
 .ph-name{font-size:7px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-align:center;opacity:.4;line-height:1.3;font-family:'Arial',sans-serif}
-/* Ornamento de dragão / dados no badge */
+/* Ornamento / dice on badge */
 .wave-badge{
   position:absolute;
   top:8px;
@@ -940,7 +940,7 @@ input[type="text"]::placeholder{color:var(--muted);font-style:italic}
   </div>
 </header>
 
-<!-- Faixas de série informativas -->
+<!-- Series separator strips -->
 <div class="series-strip">
   <div class="series-badge series-dnd">&#9812; Dungeons &amp; Dragons — Linha oficial D&amp;D</div>
   <div class="series-badge series-cr">&#9670; Vox Machina — Campaign 1</div>
@@ -969,18 +969,18 @@ input[type="text"]::placeholder{color:var(--muted);font-style:italic}
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <!-- Export -->
-      <button class="sync-btn" onclick="openSync('export')" title="Export coleção">
+      <button class="sync-btn" onclick="openSync('export')" title="Export collection">
         <svg viewBox="0 0 16 16"><path d="M8 1v9M4 7l4 4 4-4M2 13h12"/><rect x="2" y="11" width="12" height="3" rx="1" style="fill:none;stroke:currentColor;stroke-width:1.5"/></svg>
         Export
       </button>
       <!-- Import -->
-      <button class="sync-btn" onclick="openSync('import')" title="Import coleção">
+      <button class="sync-btn" onclick="openSync('import')" title="Import collection">
         <svg viewBox="0 0 16 16"><path d="M8 11V2M4 5l4-4 4 4M2 13h12"/><rect x="2" y="11" width="12" height="3" rx="1" style="fill:none;stroke:currentColor;stroke-width:1.5"/></svg>
         Import
       </button>
       <div class="view-toggle">
-        <button class="view-btn active" id="gridViewBtn" title="Vista em grelha" onclick="setView('grid')">&#8862;</button>
-        <button class="view-btn" id="listViewBtn" title="Vista em lista" onclick="setView('list')">&#9776;</button>
+        <button class="view-btn active" id="gridViewBtn" title="Grid view" onclick="setView('grid')">&#8862;</button>
+        <button class="view-btn" id="listViewBtn" title="List view" onclick="setView('list')">&#9776;</button>
       </div>
     </div>
   </div>
@@ -997,7 +997,7 @@ input[type="text"]::placeholder{color:var(--muted);font-style:italic}
     <!-- Header -->
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">
       <div class="sync-box-title">
-        <span>&#9670;</span> Sincronizar Wave
+        <span>&#9670;</span> Sync collection
       </div>
       <button class="sync-close" onclick="closeSync()">&#x2715;</button>
     </div>
@@ -1014,11 +1014,11 @@ input[type="text"]::placeholder{color:var(--muted);font-style:italic}
       <div class="sync-info-row" id="exportStats"></div>
       <button class="sync-btn-primary" onclick="doExport()">
         <svg viewBox="0 0 16 16"><path d="M2 10v4h12v-4M8 2v8M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-        Descarregar ficheiro .json
+        Download .json file
       </button>
       <div style="margin-top:12px;padding:10px 14px;background:rgba(201,146,42,.06);border:1px solid rgba(201,146,42,.15);border-radius:8px">
         <p style="font-family:Arial,sans-serif;font-size:11px;color:var(--muted2);line-height:1.6">
-          💡 Guarda o ficheiro <strong style="color:var(--gold)">colecao-dnd-cr.json</strong> e importa-o noutro dispositivo para sincronizar o teu progresso.
+          💡 Guarda o ficheiro <strong style="color:var(--gold)">collection-dnd-cr.json</strong> and import it on another device to sync your progress.
         </p>
       </div>
     </div>
@@ -1047,7 +1047,7 @@ input[type="text"]::placeholder{color:var(--muted);font-style:italic}
         <div class="sync-drop-icon">&#128193;</div>
         <div class="sync-drop-text">
           <strong>Clica ou arrasta</strong> o ficheiro .json aqui<br>
-          <span style="font-size:10px;opacity:.7">colecao-dnd-cr.json</span>
+          <span style="font-size:10px;opacity:.7">collection-dnd-cr.json</span>
         </div>
       </div>
       <input type="file" id="syncFileInput" accept=".json,application/json" onchange="loadFile(this)">
@@ -1282,7 +1282,7 @@ function makeCard(data, delay) {
   // Imagem
   const imgArea = document.createElement("div"); imgArea.className = "card-img";
   const img = document.createElement("img"); img.alt = data.name; img.loading = "eager"; img.decoding = "async";
-  // Prioridade: 1) imagem real em imgs/, 2) SVG temático inline, 3) SVG placeholder genérico
+  // Prioridade: 1) imagem real em imgs/, 2) inline thematic SVG, 3) generic SVG placeholder
   if (data.imgk && IMGS[data.imgk]) {
     img.src = IMGS[data.imgk];
     img.onerror = () => {
@@ -1729,7 +1729,7 @@ function processFile(file) {
 
       // Refresca os cards visuais (owned state)
       document.querySelectorAll(".card").forEach(card => {
-        // O render() já foi chamado — os cards são recriados
+        // O render() já foi chamated — cards are re-created
       });
 
     } catch(err) {
