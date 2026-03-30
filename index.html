@@ -809,6 +809,80 @@ input[type="text"]::placeholder{color:var(--muted);font-style:italic}
   .sync-box{padding:20px 16px 18px}
   .sync-box-title{font-size:17px}
 }
+
+/* ── LIMITED EDITION BADGE ──────────────────────────────────────────── */
+.card.limited {
+  border-color: rgba(255, 200, 32, 0.5);
+}
+.card.limited::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  box-shadow: inset 0 0 0 1px rgba(255,200,32,0.3);
+  pointer-events: none;
+  z-index: 4;
+}
+.limited-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  background: rgba(255,200,32,0.15);
+  border: 1px solid rgba(255,200,32,0.5);
+  color: #ffc820;
+  z-index: 3;
+  white-space: nowrap;
+}
+
+/* ── NFT / POP! DIGITAL ─────────────────────────────────────────────── */
+.card.nft {
+  border-color: rgba(138, 43, 226, 0.5);
+  background: linear-gradient(155deg, #0d0818 0%, #150d28 100%);
+}
+.card.nft::before {
+  background: linear-gradient(90deg, transparent, #8a2be2, transparent) !important;
+  opacity: 1 !important;
+}
+.nft-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  background: rgba(138,43,226,0.25);
+  border: 1px solid rgba(138,43,226,0.6);
+  color: #c084fc;
+  z-index: 3;
+  white-space: nowrap;
+}
+.nft-impossible {
+  font-size: 9px;
+  color: #7c3aed;
+  font-style: italic;
+  margin-top: 3px;
+  display: block;
+}
+
+/* Separador NFT */
+.sep-nft {
+  background: linear-gradient(135deg, #1a0a2e 0%, #0d0818 100%) !important;
+  border-color: rgba(138,43,226,0.5) !important;
+}
+.sep-nft .sep-icon { color: #c084fc; }
+.sep-nft .sep-title { color: #c084fc !important; }
+
 </style>
 </head>
 <body>
@@ -889,7 +963,7 @@ input[type="text"]::placeholder{color:var(--muted);font-style:italic}
   <div class="toolbar">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
       <div class="owned-pill" id="ownedCount">&#10003; 0 owned</div>
-      <div class="count-pill" id="countPill">A mostrar 0 items</div>
+      <div class="count-pill" id="countPill">Showing 0 items</div>
     </div>
     <div style="display:flex;gap:6px;align-items:center">
       <!-- Export -->
@@ -1033,7 +1107,18 @@ const IMGS = {
   "cr-608-pike": "./imgs/cr-608-pike.jpg",
   "cr-609-vex": "./imgs/cr-609-vex.jpg",
   "cr-610-vax": "./imgs/cr-610-vax.jpg",
-  "cr-611-trinket": "./imgs/cr-611-trinket.jpg"
+  "cr-611-trinket": "./imgs/cr-611-trinket.jpg",
+  "nft-152-owlbear": "",
+  "nft-153-displacer": "",
+  "nft-154-demogorgon": "",
+  "nft-155-acererak": "",
+  "nft-156-freddy-elf": "",
+  "nft-s2-death-tyrant": "",
+  "nft-s2-pseudodragon": "",
+  "nft-s2-mimic": "",
+  "nft-s2-juiblex": "",
+  "nft-s2-orcus": "",
+  "nft-s2-freddy-strongheart": ""
 };
 const SVG_IMGS = {
   "578-dnd-asmodeus": "data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20300%20300%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg578dnd%22%20cx%3D%2250%25%22%20cy%3D%2240%25%22%20r%3D%2270%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22rgb%28232%2C97%2C83%29%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22rgb%28119%2C0%2C0%29%22/%3E%0A%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3Cfilter%20id%3D%22glow578dnd%22%3E%0A%20%20%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%223%22%20result%3D%22blur%22/%3E%0A%20%20%20%20%20%20%3CfeMerge%3E%3CfeMergeNode%20in%3D%22blur%22/%3E%3CfeMergeNode%20in%3D%22SourceGraphic%22/%3E%3C/feMerge%3E%0A%20%20%20%20%3C/filter%3E%0A%20%20%3C/defs%3E%0A%20%20%3C%21--%20Background%20--%3E%0A%20%20%3Crect%20width%3D%22300%22%20height%3D%22300%22%20fill%3D%22url%28%23bg578dnd%29%22/%3E%0A%20%20%3C%21--%20Border%20ornament%20--%3E%0A%20%20%3Crect%20x%3D%228%22%20y%3D%228%22%20width%3D%22284%22%20height%3D%22284%22%20rx%3D%2212%22%20ry%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.35%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22272%22%20height%3D%22272%22%20rx%3D%228%22%20ry%3D%228%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.15%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Corner%20diamonds%20--%3E%0A%20%20%3Cpolygon%20points%3D%228%2C8%2022%2C8%208%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C8%20278%2C8%20292%2C22%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%228%2C292%2022%2C292%208%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3Cpolygon%20points%3D%22292%2C292%20278%2C292%20292%2C278%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.5%29%22/%3E%0A%20%20%3C%21--%20D20%20watermark%20--%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20180%2C75%20165%2C115%20135%2C115%20120%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.12%29%22%20stroke-width%3D%222%22/%3E%0A%20%20%3Cpolygon%20points%3D%22150%2C40%20120%2C75%20135%2C115%20165%2C115%20180%2C75%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.08%29%22%20stroke-width%3D%221%22/%3E%0A%20%20%3C%21--%20Funko%20head%20silhouette%20--%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22130%22%20rx%3D%2252%22%20ry%3D%2255%22%20fill%3D%22rgba%280%2C0%2C0%2C0.25%29%22/%3E%0A%20%20%3Cellipse%20cx%3D%22150%22%20cy%3D%22125%22%20rx%3D%2250%22%20ry%3D%2252%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.08%29%22/%3E%0A%20%20%3C%21--%20Eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22135%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22165%22%20cy%3D%22118%22%20r%3D%228%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.9%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22137%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28192%2C57%2C43%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22167%22%20cy%3D%22119%22%20r%3D%225%22%20fill%3D%22rgb%28192%2C57%2C43%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22138%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3Ccircle%20cx%3D%22168%22%20cy%3D%22118%22%20r%3D%222.5%22%20fill%3D%22%23000%22/%3E%0A%20%20%3C%21--%20Shine%20dots%20on%20eyes%20--%3E%0A%20%20%3Ccircle%20cx%3D%22140%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3Ccircle%20cx%3D%22170%22%20cy%3D%22116%22%20r%3D%221.5%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.8%29%22/%3E%0A%20%20%3C%21--%20Smile%20--%3E%0A%20%20%3Cpath%20d%3D%22M136%2C138%20Q150%2C148%20164%2C138%22%20fill%3D%22none%22%20stroke%3D%22rgba%28255%2C255%2C255%2C0.7%29%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22/%3E%0A%20%20%3C%21--%20Icon%20--%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22200%22%20text-anchor%3D%22middle%22%20font-size%3D%2238%22%20font-family%3D%22Arial%22%3E%F0%9F%91%BF%3C/text%3E%0A%20%20%3C%21--%20Series%20badge%20--%3E%0A%20%20%3Crect%20x%3D%2230%22%20y%3D%22214%22%20width%3D%2250%22%20height%3D%2218%22%20rx%3D%224%22%20fill%3D%22rgba%280%2C0%2C0%2C0.45%29%22/%3E%0A%20%20%3Ctext%20x%3D%2255%22%20y%3D%22227%22%20text-anchor%3D%22middle%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20font-family%3D%22Arial%22%20fill%3D%22rgba%28255%2C220%2C120%2C0.9%29%22%20letter-spacing%3D%221%22%3ED%26D%3C/text%3E%0A%20%20%3C%21--%20Name%20--%3E%0A%20%20%3Crect%20x%3D%2225%22%20y%3D%22238%22%20width%3D%22250%22%20height%3D%2236%22%20rx%3D%226%22%20fill%3D%22rgba%280%2C0%2C0%2C0.5%29%22/%3E%0A%20%20%3Ctext%20x%3D%22150%22%20y%3D%22261%22%20text-anchor%3D%22middle%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%20font-family%3D%22Georgia%2Cserif%22%20fill%3D%22%23f0e8d0%22%3EAsmodeus%3C/text%3E%0A%20%20%3C%21--%20Bottom%20line%20decoration%20--%3E%0A%20%20%3Cline%20x1%3D%2250%22%20y1%3D%22282%22%20x2%3D%22250%22%20y2%3D%22282%22%20stroke%3D%22rgba%28255%2C220%2C120%2C0.3%29%22%20stroke-width%3D%221%22/%3E%0A%3C/svg%3E",
@@ -1079,7 +1164,7 @@ const pops = [
   {num:"1037",name:"Lady of Pain",                    series:"D&D", col:"D&D Games",    size:'5.4"',  excl:null,             chase:false, glow:false, color:"#b09000", imgk:"dnd-1037-lady-pain"},
   {num:"1038",name:"Icingdeath 5.5\"",                series:"D&D", col:"D&D Games",    size:'5.5"', excl:null,             chase:false, glow:false, color:"#a0c0d0", imgk:"dnd-1038-icingdeath"},
   {num:"1069",name:"Gelatinous Cube with Dracolich",  series:"D&D", col:"D&D Games",    size:'3.75"', excl:"GameStop",       chase:false, glow:true,  color:"#8040a0", imgk:"dnd-1069-gelcube-draco"},
-  {num:"1071",name:"Iggwilv (Tasha) with Demonomicon", series:"D&D", col:"D&D Games",    size:'3.75"', excl:"WonderCon 2025/Funko", chase:false, glow:false, color:"#6a0080", imgk:"dnd-1071-iggwilv"},
+  {num:"1071",name:"Iggwilv (Tasha) with Demonomicon", series:"D&D", col:"D&D Games",    size:'3.75"', excl:"WonderCon 2025 / 2,000 pcs", chase:false, glow:false, limited:true, color:"#6a0080", imgk:"dnd-1071-iggwilv"},
   {num:"1134",name:"Venger (Book Cover)",             series:"D&D", col:"D&D Games",    size:'3.75"', excl:null,             chase:false, glow:false, color:"#3a1a5a", imgk:"dnd-1134-venger"},
   {num:"1168",name:"Valindra Shadowmantle",           series:"D&D", col:"D&D Games",    size:'3.75"', excl:null,             chase:false, glow:false, color:"#2a0a4a", imgk:"dnd-1168-valindra"},
   {num:"1169",name:"Strahd (Shapechanger)",           series:"D&D", col:"D&D Games",    size:'3.75"', excl:null,             chase:false, glow:false, color:"#3a0a3a", imgk:"dnd-1169-strahd-shape"},
@@ -1116,14 +1201,30 @@ const pops = [
   {num:"609", name:"Vex'ahlia",                      series:"CR",  col:"Vox Machina",  size:'3.75"', excl:null,             chase:false, glow:false, color:"#2a6a2a", imgk:"cr-609-vex"},
   {num:"610", name:"Vax'ildan",                      series:"CR",  col:"Vox Machina",  size:'3.75"', excl:null,             chase:false, glow:false, color:"#1a1a3a", imgk:"cr-610-vax"},
   {num:"611", name:"Trinket",                         series:"CR",  col:"Vox Machina",  size:'6"',    excl:"Specialty",      chase:false, glow:false, color:"#6b3a00", imgk:"cr-611-trinket"},
+  // ============================================================
+  // POP! DIGITAL — NFT / Droppp (redeemable physical)
+  // ============================================================
+  // Series 1 — March 2023 (Droppp) · Physical redemption EXPIRED
+  {num:"NFT-152", name:"Owlbear (Brown)",              series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S1 / 1,640 pcs", chase:false, glow:false, limited:true, nft:true, color:"#6b3a00", imgk:"nft-152-owlbear"},
+  {num:"NFT-153", name:"Displacer Beast",               series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S1 / 1,640 pcs", chase:false, glow:false, limited:true, nft:true, color:"#5b21b6", imgk:"nft-153-displacer"},
+  {num:"NFT-154", name:"Demogorgon",                    series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S1 / 1,640 pcs", chase:false, glow:false, limited:true, nft:true, color:"#166534", imgk:"nft-154-demogorgon"},
+  {num:"NFT-155", name:"Acererak",                      series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S1 / 999 pcs",   chase:false, glow:false, limited:true, nft:true, color:"#374151", imgk:"nft-155-acererak"},
+  {num:"NFT-156", name:"Freddy Funko as High Elf",      series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S1 / 2,500 pcs", chase:false, glow:false, limited:true, nft:true, color:"#1e40af", imgk:"nft-156-freddy-elf"},
+  // Series 2 — May 2025 (Droppp) · Physical redemption active until Dec 2025
+  {num:"NFT-S2",  name:"Death Tyrant",                  series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S2 / 1,800 pcs", chase:false, glow:false, limited:true, nft:true, color:"#1f2937", imgk:"nft-s2-death-tyrant"},
+  {num:"NFT-S2",  name:"Pseudodragon",                  series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S2 / 1,800 pcs", chase:false, glow:false, limited:true, nft:true, color:"#7c3aed", imgk:"nft-s2-pseudodragon"},
+  {num:"NFT-S2",  name:"Mimic",                         series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S2 / 1,800 pcs", chase:false, glow:false, limited:true, nft:true, color:"#92400e", imgk:"nft-s2-mimic"},
+  {num:"NFT-S2",  name:"Juiblex",                       series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S2 / 1,800 pcs", chase:false, glow:false, limited:true, nft:true, color:"#166534", imgk:"nft-s2-juiblex"},
+  {num:"NFT-S2",  name:"Orcus",                         series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S2 / 999 pcs",   chase:false, glow:false, limited:true, nft:true, color:"#6b21a8", imgk:"nft-s2-orcus"},
+  {num:"NFT-S2",  name:"Freddy Funko as Strongheart",   series:"D&D", col:"Pop Digital", size:'3.75"', excl:"Droppp S2 / 2,400 pcs", chase:false, glow:false, limited:true, nft:true, color:"#1d4ed8", imgk:"nft-s2-freddy-strongheart"},
 ];
 
 // =============================================================
 // CORES POR WAVE / SÉRIE
 // =============================================================
-const waveColors = {"D&D Games":"#c0392b","HAT":"#e74c3c","Vox Machina":"#e67e22"};
+const waveColors = {"D&D Games":"#c0392b","HAT":"#e74c3c","Vox Machina":"#e67e22","Pop Digital":"#7c3aed"};
 
-const waveFilters = ["All", "D&D Games", "HAT", "Vox Machina"];
+const waveFilters = ["All", "D&D Games", "HAT", "Vox Machina", "Pop Digital"];
 const seriesAll    = ["All", "D&D", "Critical Role"];
 
 let activeWave   = "All";
@@ -1170,7 +1271,10 @@ function makeCard(data, delay) {
   const isOwned = owned.has(key);
 
   const card = document.createElement("div");
-  card.className = "card" + (isOwned ? " owned" : "");
+  card.className = "card"
+    + (isOwned       ? " owned"   : "")
+    + (data.limited  ? " limited" : "")
+    + (data.nft      ? " nft"     : "");
   card.style.animationDelay = delay + "s";
 
   // Imagem
@@ -1196,6 +1300,23 @@ function makeCard(data, delay) {
   badge.style.background = wc + "dd";
   badge.textContent = data.col.replace("D&D ","").replace("HAT ","Film ");
   imgArea.appendChild(badge);
+  // Limited edition badge
+  if (data.limited) {
+    const lb = document.createElement("div");
+    lb.className = "limited-badge";
+    const qty = data.excl ? data.excl.match(/[\/]\s*([\d,]+)\s*pcs/i) : null;
+    lb.textContent = qty ? "⬡ " + qty[1] + " pcs" : "⬡ LIMITED";
+    imgArea.appendChild(lb);
+  }
+  // NFT badge (substitui o wave badge visual)
+  if (data.nft) {
+    const nb = document.createElement("div");
+    nb.className = "nft-badge";
+    nb.textContent = "Pop! Digital · NFT";
+    imgArea.appendChild(nb);
+    // Esconder o wave badge normal nos NFT
+    badge.style.display = "none";
+  }
 
   // Botão de owned
   const ownBtn = document.createElement("div");
@@ -1230,6 +1351,16 @@ function makeCard(data, delay) {
     <div class="card-name">${data.name}</div>
     <div class="card-tags">${tagsHtml}</div>
   `;
+  // NFT impossível info
+  if (data.nft) {
+    const s1closed = data.excl && data.excl.includes("S1");
+    const note = document.createElement("span");
+    note.className = "nft-impossible";
+    note.textContent = s1closed
+      ? "⚠ Physical redemption closed — impossible to obtain"
+      : "⚠ Physical redemption via Droppp";
+    body.appendChild(note);
+  }
   card.appendChild(body);
 
   // Hover
@@ -1266,10 +1397,15 @@ const COL_SEP_CONFIG = {
     title:"Critical Role — Vox Machina",
     sub:"Pop! Games · Campaign 1 · #603–611"
   },
+  "Pop Digital": {
+    cls:"sep-nft", icon:"⬡",
+    title:"Pop! Digital — NFT Redeemable",
+    sub:"Droppp · Blockchain · Limited physical redemptions · Series 1 (2023) & Series 2 (2025)"
+  },
 };
 
 // Ordem canónica das waves
-const COL_ORDER = ["D&D Games", "HAT", "Vox Machina"];
+const COL_ORDER = ["D&D Games", "HAT", "Vox Machina", "Pop Digital"];
 
 function makeSeparator(wave, count) {
   const cfg = COL_SEP_CONFIG[wave] || { cls:"sep-dnd-wave1", icon:"🎲", title:wave, sub:"" };
@@ -1348,7 +1484,7 @@ function render() {
     out.appendChild(g);
   }
 
-  document.getElementById("countPill").textContent = `A mostrar ${filtered.length} item${filtered.length !== 1 ? "s" : ""}`;
+  document.getElementById("countPill").textContent = `Showing ${filtered.length} item${filtered.length !== 1 ? "s" : ""}`;
   updateStats();
 }
 
