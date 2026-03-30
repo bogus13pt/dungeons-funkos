@@ -1392,7 +1392,7 @@ const COL_SEP_CONFIG = {
   "HAT": {
     cls:"sep-hat", icon:"🎬",
     title:"Dungeons & Dragons — Honor Among Thieves",
-    sub:"Pop! Movies · Filme 2023 · #1325–1331"
+    sub:"Pop! Movies · Movie 2023 · #1325–1331"
   },
   "Vox Machina": {
     cls:"sep-vm", icon:"🔥",
@@ -1421,7 +1421,7 @@ function makeSeparator(wave, count) {
         <div class="wave-sep-title">${cfg.title}</div>
         ${cfg.sub ? `<div class="wave-sep-sub">${cfg.sub}</div>` : ""}
       </div>
-      <div class="wave-sep-count">${count}<span>figuras</span></div>
+      <div class="wave-sep-count">${count}<span>figures</span></div>
     </div>`;
   return wrapper;
 }
@@ -1446,7 +1446,7 @@ function render() {
 
   if (!filtered.length) {
     const g = document.createElement("div"); g.className = "grid";
-    g.innerHTML = `<div class="empty"><div class="empty-icon">&#9828;</div><p>Nenhuma figura corresponde a "${q || activeWave}"</p></div>`;
+    g.innerHTML = `<div class="empty"><div class="empty-icon">&#9828;</div><p>No figures match "${q || activeWave}"</p></div>`;
     out.appendChild(g);
     document.getElementById("countPill").textContent = "Sem resultados";
     updateStats();
@@ -1658,7 +1658,7 @@ function doExport() {
   const a    = document.createElement("a");
   const date = new Date().toISOString().slice(0,10);
   a.href     = url;
-  a.download = `colecao-dnd-cr-${date}.json`;
+  a.download = `collection-dnd-cr-${date}.json`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -1725,7 +1725,7 @@ function processFile(file) {
 
       const added = importedKeys.length;
       const mode  = mergeMode === "replace" ? "replaced" : "juntada";
-      showMsg(`✓ Wave ${mode}! ${owned.size} figuras na coleção (${added} importadas).`, "ok");
+      showMsg(`✓ Wave ${mode}! ${owned.size} figures in collection (${added} imported).`, "ok");
 
       // Refresca os cards visuais (owned state)
       document.querySelectorAll(".card").forEach(card => {
